@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Détail vendeur - Megane Market</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles spécifiques pour la page détail */
+        .detail-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header identique à index.html */
+        .detail-header-bar {
+            position: sticky;
+            top: 16px;
+            z-index: 200;
+            background: #0e1a26;
+            border-radius: 60px;
+            border: 1px solid var(--border);
+            height: 60px;
+            margin: 0 0 20px 0;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn {
+            background: #1a2a3a;
+            border: 1px solid var(--b2);
+            border-radius: 40px;
+            padding: 8px 16px;
+            cursor: pointer;
+            color: var(--text);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            background: var(--blue);
+            color: white;
+            transform: translateX(-4px);
+        }
+
+        .detail-header-bar h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .disable-btn {
+            background: var(--s2);
+            border: 1px solid var(--red);
+            border-radius: 40px;
+            padding: 8px 16px;
+            cursor: pointer;
+            color: var(--red);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .disable-btn:hover {
+            background: var(--red);
+            color: white;
+        }
+
+        /* Cartes */
+        .info-card-detailed {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 16px 20px;
+            background: var(--s2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Profil */
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--blue);
+        }
+
+        .profile-avatar-placeholder {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--s2);
+            border: 3px solid var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--blue);
+        }
+
+        .profile-info h2 {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .profile-info p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .profile-status {
+            margin-left: auto;
+        }
+
+        /* Grille stats */
+        .stats-grid-detailed {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .stat-card-detailed {
+            background: var(--s2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-card-detailed .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--blue);
+        }
+
+        .stat-card-detailed .stat-label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* Grille infos */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-item label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .info-item .value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        /* Description */
+        .description-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        /* Liste produits */
+        .products-list-detailed {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .product-item-detailed {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            background: var(--s2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .product-item-detailed:hover {
+            border-color: var(--blue);
+            transform: translateX(6px);
+        }
+
+        .product-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: cover;
+            background: var(--s1);
+        }
+
+        .product-img-placeholder {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--s1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 1.2rem;
+        }
+
+        .product-info-detailed {
+            flex: 1;
+        }
+
+        .product-name-detailed {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .product-price-detailed {
+            font-size: 0.75rem;
+            color: var(--blue);
+        }
+
+        .product-arrow {
+            color: var(--muted);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid-detailed {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-row {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-status {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="detail-container">
+        <!-- Header identique à index.html -->
+        <div class="detail-header-bar">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+            <h3 id="pageTitle">Chargement...</h3>
+            <button id="disableMarketBtn" class="disable-btn" style="display: none;">
+                <i class="fas fa-power-off"></i> Désactiver
+            </button>
+        </div>
+
+        <div id="detailContent">
+            <div class="loader">
+                <div class="spinner"></div>
+                <p>Chargement...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (function() {
+            const SUPABASE_URL = 'https://emcsigvlopntwbfkkjkh.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtY3NpZ3Zsb3BudHdiZmtramtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4ODE5MTgsImV4cCI6MjA5NDQ1NzkxOH0.YwYoV-azL3WEFtHoh4yoF7xTLrOwZILKCzJrGPsCs6I';
+
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const detailContent = document.getElementById('detailContent');
+            const pageTitle = document.getElementById('pageTitle');
+            const disableBtn = document.getElementById('disableMarketBtn');
+
+            let currentVendeur = null;
+
+            function getVendeurId() {
+                const params = new URLSearchParams(window.location.search);
+                return params.get('id');
+            }
+
+            async function toggleMarketStatus() {
+                if (!currentVendeur) return;
+                const newStatus = !currentVendeur.market_active;
+                const action = newStatus ? 'activer' : 'désactiver';
+                
+                if (confirm(`Êtes-vous sûr de vouloir ${action} ce marché ?`)) {
+                    const { error } = await supabase
+                        .from('markets')
+                        .update({ market_active: newStatus })
+                        .eq('id', currentVendeur.id);
+                    
+                    if (error) {
+                        alert('Erreur lors de la modification');
+                    } else {
+                        alert(`Marché ${action} avec succès`);
+                        loadVendeur();
+                    }
+                }
+            }
+
+            async function loadVendeur() {
+                const id = getVendeurId();
+                if (!id) {
+                    detailContent.innerHTML = `<div class="empty-state">Vendeur non trouvé</div>`;
+                    return;
+                }
+
+                try {
+                    const { data: vendeur, error } = await supabase
+                        .from('markets')
+                        .select('*')
+                        .eq('id', id)
+                        .single();
+
+                    if (error || !vendeur) throw new Error('Vendeur non trouvé');
+                    currentVendeur = vendeur;
+
+                    // Titre abrégé
+                    const shortName = vendeur.market_name ? vendeur.market_name.substring(0, 25) : 'Vendeur';
+                    pageTitle.textContent = shortName;
+                    disableBtn.style.display = 'flex';
+                    disableBtn.onclick = toggleMarketStatus;
+                    disableBtn.innerHTML = vendeur.market_active !== false ? 
+                        '<i class="fas fa-power-off"></i> Désactiver' : 
+                        '<i class="fas fa-play"></i> Activer';
+                    disableBtn.style.borderColor = vendeur.market_active !== false ? 'var(--red)' : 'var(--green)';
+                    disableBtn.style.color = vendeur.market_active !== false ? 'var(--red)' : 'var(--green)';
+
+                    // Charger produits
+                    const { data: produits } = await supabase
+                        .from('products')
+                        .select('*')
+                        .eq('user_id', id)
+                        .order('created_at', { ascending: false });
+
+                    // Charger stats
+                    const productIds = produits?.map(p => p.id) || [];
+                    let productStats = {};
+                    if (productIds.length > 0) {
+                        const { data: stats } = await supabase
+                            .from('product_stats')
+                            .select('*')
+                            .in('product_id', productIds);
+                        for (const s of stats || []) {
+                            if (!productStats[s.product_id]) productStats[s.product_id] = { views: 0, clicks: 0 };
+                            productStats[s.product_id].views += s.view_count || 0;
+                            productStats[s.product_id].clicks += s.click_count || 0;
+                        }
+                    }
+
+                    const totalViews = produits?.reduce((sum, p) => sum + (productStats[p.id]?.views || 0), 0) || 0;
+                    const totalClicks = produits?.reduce((sum, p) => sum + (productStats[p.id]?.clicks || 0), 0) || 0;
+                    const conversion = totalViews ? ((totalClicks / totalViews) * 100).toFixed(1) : 0;
+                    const isActive = vendeur.market_active !== false;
+                    const avatarUrl = vendeur.avatar_url;
+
+                    let produitsHtml = '';
+                    if (produits && produits.length > 0) {
+                        produitsHtml = produits.map(p => {
+                            const imageUrl = (p.images && p.images[0]) ? p.images[0] : null;
+                            return `
+                                <div class="product-item-detailed" data-id="${p.id}">
+                                    ${imageUrl 
+                                        ? `<img src="${escapeHtml(imageUrl)}" class="product-img" onerror="this.src=''">`
+                                        : `<div class="product-img-placeholder"><i class="fas fa-image"></i></div>`
+                                    }
+                                    <div class="product-info-detailed">
+                                        <div class="product-name-detailed">${escapeHtml(p.name)}</div>
+                                        <div class="product-price-detailed">${formatPrice(p.price)} FCFA</div>
+                                    </div>
+                                    <div class="product-arrow"><i class="fas fa-chevron-right"></i></div>
+                                </div>
+                            `;
+                        }).join('');
+                    } else {
+                        produitsHtml = '<div class="empty-state">Aucun produit</div>';
+                    }
+
+                    detailContent.innerHTML = `
+                        <!-- Carte Profil -->
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-user-circle"></i> Profil</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="profile-row">
+                                    ${avatarUrl 
+                                        ? `<img src="${escapeHtml(avatarUrl)}" class="profile-avatar" onerror="this.src=''">`
+                                        : `<div class="profile-avatar-placeholder"><i class="fas fa-store"></i></div>`
+                                    }
+                                    <div class="profile-info">
+                                        <h2>${escapeHtml(vendeur.market_name || 'Sans nom')}</h2>
+                                        <p>${escapeHtml(vendeur.owner_name || 'Propriétaire')}</p>
+                                    </div>
+                                    <div class="profile-status">
+                                        <span class="status-badge ${isActive ? 'status-active' : 'status-inactive'}">${isActive ? 'Actif' : 'Inactif'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carte Statistiques -->
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-line"></i> Statistiques</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="stats-grid-detailed">
+                                    <div class="stat-card-detailed">
+                                        <div class="stat-value">${produits?.length || 0}</div>
+                                        <div class="stat-label">Produits</div>
+                                    </div>
+                                    <div class="stat-card-detailed">
+                                        <div class="stat-value">${totalViews}</div>
+                                        <div class="stat-label">Vues</div>
+                                    </div>
+                                    <div class="stat-card-detailed">
+                                        <div class="stat-value">${totalClicks}</div>
+                                        <div class="stat-label">Commandes</div>
+                                    </div>
+                                    <div class="stat-card-detailed">
+                                        <div class="stat-value">${conversion}%</div>
+                                        <div class="stat-label">Conversion</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carte Informations -->
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-info-circle"></i> Informations</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <label>Email</label>
+                                        <div class="value">${escapeHtml(vendeur.email || '-')}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Téléphone</label>
+                                        <div class="value">${escapeHtml(vendeur.phone || '-')}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Email public</label>
+                                        <div class="value">${escapeHtml(vendeur.public_email || '-')}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Ville</label>
+                                        <div class="value">${escapeHtml(vendeur.city || '-')}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>WhatsApp</label>
+                                        <div class="value">${escapeHtml(vendeur.whatsapp || '-')}</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Inscrit le</label>
+                                        <div class="value">${vendeur.created_at ? new Date(vendeur.created_at).toLocaleDateString() : '-'}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carte Description -->
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-align-left"></i> Description</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="description-text">${escapeHtml(vendeur.description || 'Aucune description')}</div>
+                            </div>
+                        </div>
+
+                        <!-- Carte Produits -->
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-boxes"></i> Produits (${produits?.length || 0})</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="products-list-detailed">
+                                    ${produitsHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    document.querySelectorAll('.product-item-detailed').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const pid = item.getAttribute('data-id');
+                            window.location.href = `produit.html?id=${pid}`;
+                        });
+                    });
+
+                } catch (err) {
+                    console.error(err);
+                    detailContent.innerHTML = `<div class="empty-state">Erreur: ${err.message}</div>`;
+                }
+            }
+
+            function formatPrice(price) {
+                return new Intl.NumberFormat('fr-FR').format(price);
+            }
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            loadVendeur();
+        })();
+    </script>
+</body>
+</html>

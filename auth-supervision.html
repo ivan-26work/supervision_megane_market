@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Accès Supervision - Megane Market</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0a0f1a;
+            color: #eef2ff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            max-width: 400px;
+            width: 100%;
+            background: #0e1a26;
+            border-radius: 30px;
+            border: 1px solid #2a3a4a;
+            padding: 40px 32px;
+            text-align: center;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-icon {
+            font-size: 3rem;
+            color: #5a9eff;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #8a9aaa;
+            font-size: 0.85rem;
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8a9aaa;
+            font-size: 1rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            background: #1a2a3a;
+            border: 1px solid #2a3a4a;
+            border-radius: 30px;
+            color: #eef2ff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #5a9eff;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: #5a9eff;
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-login:hover {
+            background: #3a7ecc;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 0.8rem;
+            margin-top: 16px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .loader {
+            display: none;
+            margin-top: 16px;
+        }
+
+        .loader.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #2a3a4a;
+            border-top-color: #5a9eff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="login-icon">
+        <i class="fas fa-chart-network"></i>
+    </div>
+    <h2>Accès supervision</h2>
+    <div class="subtitle">Espace réservé à l'administrateur</div>
+
+    <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="loginEmail" placeholder="Email administrateur" autocomplete="email">
+    </div>
+    <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="loginPassword" placeholder="Mot de passe" autocomplete="current-password">
+    </div>
+
+    <button class="btn-login" id="loginBtn">
+        <i class="fas fa-sign-in-alt"></i> Accéder au tableau de bord
+    </button>
+
+    <div id="errorMessage" class="error-message"></div>
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+        <span>Connexion...</span>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    (function() {
+        const SUPABASE_URL = 'https://emcsigvlopntwbfkkjkh.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtY3NpZ3Zsb3BudHdiZmtramtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4ODE5MTgsImV4cCI6MjA5NDQ1NzkxOH0.YwYoV-azL3WEFtHoh4yoF7xTLrOwZILKCzJrGPsCs6I';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const loader = document.getElementById('loader');
+
+        // Email autorisé pour la supervision
+        const AUTHORIZED_EMAIL = 'ipoteivan23@gmail.com';
+
+        async function checkExistingSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session && session.user.email === AUTHORIZED_EMAIL) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        async function login() {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+
+            if (!email || !password) {
+                showError('Veuillez entrer email et mot de passe');
+                return;
+            }
+
+            if (email !== AUTHORIZED_EMAIL) {
+                showError('Accès non autorisé. Seul l\'administrateur peut accéder à cette page.');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) throw error;
+
+                if (data.user && data.user.email === AUTHORIZED_EMAIL) {
+                    window.location.href = 'index.html';
+                } else {
+                    showError('Accès non autorisé');
+                }
+            } catch (err) {
+                console.error('Erreur connexion:', err);
+                showError('Email ou mot de passe incorrect');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+        }
+
+        function hideError() {
+            errorMessage.classList.remove('show');
+        }
+
+        function showLoading(show) {
+            if (show) {
+                loader.classList.add('show');
+                loginBtn.disabled = true;
+                loginBtn.style.opacity = '0.6';
+            } else {
+                loader.classList.remove('show');
+                loginBtn.disabled = false;
+                loginBtn.style.opacity = '1';
+            }
+        }
+
+        loginBtn.addEventListener('click', login);
+        loginEmail.addEventListener('keypress', (e) => { if (e.key === 'Enter') login(); });
+        loginPassword.addEventListener('keypress', (e) => { if (e.key === 'Enter') login(); });
+
+        checkExistingSession();
+    })();
+</script>
+</body>
+</html>

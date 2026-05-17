@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Supervision - Megane Market</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="globalSearch" placeholder="Rechercher...">
+        </div>
+        <button id="refreshBtn" class="icon-btn">
+            <i class="fas fa-sync-alt"></i>
+        </button>
+    </header>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" data-tab="sellers">
+            <i class="fas fa-store"></i> Vendeurs
+            <span id="sellersBadge" class="tab-badge">0</span>
+        </button>
+        <button class="tab-btn" data-tab="clients">
+            <i class="fas fa-users"></i> Clients
+            <span id="clientsBadge" class="tab-badge">0</span>
+        </button>
+        <button class="tab-btn" data-tab="products">
+            <i class="fas fa-boxes"></i> Produits
+            <span id="productsBadge" class="tab-badge">0</span>
+        </button>
+    </div>
+
+    <main id="tabContent" class="tab-content"></main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
