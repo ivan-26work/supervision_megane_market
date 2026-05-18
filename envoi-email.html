@@ -19,73 +19,87 @@
             background: #f0f2f5;
             color: #1a2a3a;
             min-height: 100vh;
-            padding: 20px;
+            padding-top: 80px;
+            padding-bottom: 80px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Header */
+        /* ============ HEADER FIXE ============ */
         .main-header {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            z-index: 1000;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            height: 70px;
-            margin-bottom: 24px;
-            padding: 0 24px;
+            border-radius: 60px;
+            height: 60px;
+            padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border: 1px solid #e8ecf0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
-        .logo {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #5a9eff;
+        .logo-area {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .back-btn {
+        .logo-area i {
+            font-size: 1.2rem;
+            color: #5a9eff;
+        }
+
+        .logo-area span {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .header-btn {
             background: #f0f2f5;
             border: 1px solid #d0d5dd;
             border-radius: 40px;
-            padding: 8px 20px;
+            padding: 8px 16px;
             cursor: pointer;
             color: #1a2a3a;
             text-decoration: none;
+            font-weight: 500;
+            font-size: 0.8rem;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .back-btn:hover {
+        .header-btn:hover {
             background: #5a9eff;
             color: white;
             border-color: #5a9eff;
         }
 
-        /* Grille */
-        .dashboard {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+        /* ============ MAIN CONTENT ============ */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* Cartes blanches */
+        /* ============ CARTES ============ */
         .card {
             background: white;
             border-radius: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             overflow: hidden;
-            transition: all 0.3s ease;
+            margin-bottom: 24px;
             border: 1px solid #e8ecf0;
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
         }
 
         .card-header {
@@ -110,14 +124,13 @@
 
         .card-header h3 i {
             color: #5a9eff;
-            font-size: 1.2rem;
         }
 
         .card-body {
             padding: 24px;
         }
 
-        /* Toggle clients/vendeurs */
+        /* ============ ONGLETS ============ */
         .recipient-tabs {
             display: flex;
             gap: 12px;
@@ -142,7 +155,7 @@
             color: white;
         }
 
-        /* Liste des destinataires */
+        /* ============ LISTE ============ */
         .recipient-list {
             max-height: 400px;
             overflow-y: auto;
@@ -201,24 +214,7 @@
             color: #4ade80;
         }
 
-        /* Sélection tout */
-        .select-all-btn {
-            background: #5a9eff;
-            border: none;
-            border-radius: 30px;
-            padding: 6px 16px;
-            color: white;
-            font-weight: 600;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .select-all-btn:hover {
-            background: #3a7ecc;
-        }
-
-        /* Champs formulaire */
+        /* ============ FORMULAIRES ============ */
         .form-group {
             margin-bottom: 24px;
         }
@@ -236,7 +232,7 @@
             color: #5a9eff;
         }
 
-        .form-group input, .form-group textarea, .form-group select {
+        .form-group input, .form-group textarea {
             width: 100%;
             padding: 12px 16px;
             background: #fafbfc;
@@ -249,12 +245,21 @@
             transition: all 0.2s;
         }
 
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+        .form-group input:focus, .form-group textarea:focus {
             border-color: #5a9eff;
             box-shadow: 0 0 0 3px rgba(90, 158, 255, 0.1);
         }
 
-        /* Conseil */
+        .image-preview {
+            margin-top: 12px;
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 12px;
+            display: block;
+            object-fit: cover;
+            border: 1px solid #d0d5dd;
+        }
+
         .tip {
             background: #e8f4e8;
             border-left: 4px solid #4ade80;
@@ -268,87 +273,89 @@
             gap: 10px;
         }
 
-        .tip.warning {
-            background: #fff3e0;
-            border-left-color: #ffaa44;
-            color: #ed6c02;
-        }
-
-        /* Aperçu image */
-        .image-preview {
-            margin-top: 12px;
-            max-width: 100%;
-            max-height: 150px;
-            border-radius: 12px;
-            display: none;
-            object-fit: cover;
-            border: 1px solid #d0d5dd;
-        }
-
-        /* Ligne bouton */
-        .double-input {
+        /* ============ FOOTER FIXE ============ */
+        .main-footer {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            background: white;
+            border-radius: 60px;
+            height: 60px;
+            padding: 0 20px;
             display: flex;
-            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            border: 1px solid #e8ecf0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
         }
 
-        .double-input input {
-            flex: 1;
+        .footer-counter {
+            background: #f0f2f5;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a2a3a;
         }
 
-        /* Bouton envoi */
+        .footer-counter span {
+            color: #5a9eff;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
         .btn-send {
-            width: 100%;
-            padding: 16px;
             background: #ff4d4d;
             border: none;
             border-radius: 40px;
+            padding: 8px 24px;
             color: white;
-            font-weight: 700;
-            font-size: 1rem;
+            font-weight: 600;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn-send:hover {
             background: #d63030;
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
         }
 
         .btn-send:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none;
         }
 
-        /* Résumé */
-        .summary {
-            background: #f0f2f5;
-            border-radius: 16px;
-            padding: 16px;
-            margin-top: 16px;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #1a2a3a;
+        .btn-send.animate {
+            animation: pulse 0.5s ease;
         }
 
-        /* Toast */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        /* ============ TOAST ============ */
         .toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 90px;
             left: 50%;
             transform: translateX(-50%) translateY(20px);
             background: #1a2a3a;
             color: white;
-            padding: 12px 24px;
-            border-radius: 60px;
-            font-size: 0.85rem;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.8rem;
             opacity: 0;
             transition: all 0.3s ease;
-            z-index: 1000;
+            z-index: 1100;
         }
 
         .toast.show {
@@ -369,58 +376,77 @@
             display: inline-block;
             width: 16px;
             height: 16px;
-            border: 2px solid #fff;
+            border: 2px solid white;
             border-top-color: transparent;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.6s linear infinite;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #8a9aaa;
+        .select-all-btn {
+            background: #5a9eff;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
         }
 
-        .badge-count {
-            background: #5a9eff;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
+        .select-all-btn:hover {
+            background: #3a7ecc;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 12px;
+            .main-header, .main-footer {
+                left: 12px;
+                right: 12px;
             }
             .card-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            .double-input {
-                flex-direction: column;
+            .footer-counter {
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+            .btn-send {
+                padding: 6px 16px;
+                font-size: 0.75rem;
+            }
+            .header-btn span {
+                display: none;
+            }
+            .header-btn i {
+                margin: 0;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+    <!-- HEADER FIXE -->
     <header class="main-header">
-        <div class="logo">
-            <i class="fas fa-envelope"></i> Envoi d'e-mails
+        <div class="logo-area">
+            <i class="fas fa-envelope"></i>
+            <span>Envoi d'e-mails</span>
         </div>
-        <a href="index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Retour
-        </a>
+        <div class="header-actions">
+            <a href="index.html" class="header-btn">
+                <i class="fas fa-arrow-left"></i> <span>Retour</span>
+            </a>
+            <a href="historique.html" class="header-btn">
+                <i class="fas fa-history"></i> <span>Historique</span>
+            </a>
+        </div>
     </header>
 
-    <div class="dashboard">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
         <!-- Carte 1 : Destinataires -->
         <div class="card">
             <div class="card-header">
@@ -432,15 +458,14 @@
             </div>
             <div class="card-body">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <span id="selectedCount" class="badge-count">0 sélectionné</span>
                     <button id="selectAllBtn" class="select-all-btn">✅ Tout sélectionner</button>
                 </div>
                 <div id="recipientList" class="recipient-list">
-                    <div class="empty-state">Chargement...</div>
+                    <div class="tip">Chargement...</div>
                 </div>
                 <div class="tip">
                     <i class="fas fa-lightbulb"></i>
-                    <span>Conseil : Sélectionnez les destinataires qui recevront votre message. Utilisez "Tout sélectionner" pour gagner du temps.</span>
+                    <span>Sélectionnez les destinataires qui recevront votre message.</span>
                 </div>
             </div>
         </div>
@@ -453,20 +478,12 @@
             <div class="card-body">
                 <div class="form-group">
                     <label><i class="fas fa-tag"></i> Sujet</label>
-                    <input type="text" id="emailSubject" placeholder="Ex: Offre exceptionnelle sur Megane Market">
-                    <div class="tip">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Conseil : Un sujet court et accrocheur augmente le taux d'ouverture de 30%.</span>
-                    </div>
+                    <input type="text" id="emailSubject" value="Remerciement aux utilisateurs de Megane Market">
                 </div>
 
                 <div class="form-group">
                     <label><i class="fas fa-comment"></i> Message</label>
-                    <textarea id="emailMessage" rows="5" placeholder="Bonjour,&#10;&#10;Nous avons le plaisir de vous informer..."></textarea>
-                    <div class="tip">
-                        <i class="fas fa-heart"></i>
-                        <span>Conseil : Personnalisez votre message, soyez chaleureux et concis.</span>
-                    </div>
+                    <textarea id="emailMessage" rows="5">Nous vous remercions énormément de prendre part à notre marché et d'y poster vos produits. Nous travaillerons ensemble pour une visibilité maximale de votre marché et produit de manière fiable. Vous pouvez informer vos clients des actualités par email, voir les statistiques de vos produits... et plein d'autres fonctionnalités. Megane Market est un outil en cours de développement pour une vérité et efficacité sur le marché e-commerce.</textarea>
                 </div>
             </div>
         </div>
@@ -479,70 +496,38 @@
             <div class="card-body">
                 <div class="form-group">
                     <label><i class="fas fa-image"></i> Image (optionnel)</label>
-                    <input type="text" id="imageUrl" placeholder="https://exemple.com/image.jpg">
-                    <img id="imagePreview" class="image-preview" src="" alt="Aperçu">
-                    <div class="tip warning">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Ajoutez une image pour rendre votre e-mail plus attractif. Format recommandé : 600x400px.</span>
-                    </div>
+                    <input type="text" id="imageUrl" value="https://emcsigvlopntwbfkkjkh.supabase.co/storage/v1/object/public/buyers-avatars/20260518_150104.jpg">
+                    <img id="imagePreview" class="image-preview" src="https://emcsigvlopntwbfkkjkh.supabase.co/storage/v1/object/public/buyers-avatars/20260518_150104.jpg" alt="Aperçu">
                 </div>
 
                 <div class="form-group">
                     <label><i class="fas fa-link"></i> Bouton d'appel à l'action</label>
-                    <div class="double-input">
-                        <input type="text" id="buttonText" placeholder="Texte du bouton" value="Découvrir">
-                        <input type="text" id="buttonUrl" placeholder="https://..." value="https://emcsigvlopntwbfkkjkh.supabase.co/functions/v1/market.html">
-                    </div>
-                    <div class="tip">
-                        <i class="fas fa-hand-pointer"></i>
-                        <span>Conseil : Un bouton clair augmente le taux de clic. Ex: "Voir l'offre", "Acheter maintenant".</span>
-                    </div>
+                    <input type="text" id="buttonText" value="Gérer mon marché">
+                    <input type="text" id="buttonUrl" value="https://ivan-26work.github.io/my_market_online/" style="margin-top: 8px;">
                 </div>
-            </div>
-        </div>
 
-        <!-- Carte 4 : Expéditeur -->
-        <div class="card">
-            <div class="card-header">
-                <h3><i class="fas fa-user-circle"></i> Expéditeur</h3>
-            </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label><i class="fas fa-signature"></i> Nom de l'expéditeur</label>
-                    <input type="text" id="fromName" value="Megane Market" placeholder="Votre nom ou boutique">
-                </div>
                 <div class="form-group">
                     <label><i class="fas fa-reply"></i> Email de réponse</label>
-                    <input type="email" id="replyTo" value="contact@megane-market.com" placeholder="Email de réponse">
-                </div>
-            </div>
-        </div>
-
-        <!-- Carte 5 : Envoi -->
-        <div class="card">
-            <div class="card-header">
-                <h3><i class="fas fa-rocket"></i> Envoi</h3>
-            </div>
-            <div class="card-body">
-                <button id="sendEmailBtn" class="btn-send">
-                    <i class="fas fa-paper-plane"></i> Envoyer le message
-                </button>
-                <div id="summary" class="summary">
-                    ℹ️ Aucun destinataire sélectionné
-                </div>
-                <div class="tip">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Les e-mails sont envoyés via EmailJS. Un rapport vous sera présenté à la fin.</span>
+                    <input type="email" id="replyTo" value="ivangaelipote@gmail.com">
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="toast" class="toast"></div>
+    <!-- FOOTER FIXE -->
+    <footer class="main-footer">
+        <div class="footer-counter">
+            <i class="fas fa-users"></i> <span id="selectedCount">0</span> destinataire(s)
+        </div>
+        <button id="sendEmailBtn" class="btn-send">
+            <i class="fas fa-paper-plane"></i> Envoyer
+        </button>
+    </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
+    <div id="toast" class="toast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
     (function() {
         const SUPABASE_URL = 'https://emcsigvlopntwbfkkjkh.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtY3NpZ3Zsb3BudHdiZmtramtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4ODE5MTgsImV4cCI6MjA5NDQ1NzkxOH0.YwYoV-azL3WEFtHoh4yoF7xTLrOwZILKCzJrGPsCs6I';
@@ -562,20 +547,19 @@
         let currentType = "clients";
 
         const recipientListEl = document.getElementById('recipientList');
-        const selectedCountEl = document.getElementById('selectedCount');
+        const selectedCountSpan = document.getElementById('selectedCount');
         const sendBtn = document.getElementById('sendEmailBtn');
         const subjectInput = document.getElementById('emailSubject');
         const messageInput = document.getElementById('emailMessage');
-        const fromNameInput = document.getElementById('fromName');
         const replyToInput = document.getElementById('replyTo');
         const imageUrlInput = document.getElementById('imageUrl');
         const imagePreview = document.getElementById('imagePreview');
         const buttonUrlInput = document.getElementById('buttonUrl');
         const buttonTextInput = document.getElementById('buttonText');
         const selectAllBtn = document.getElementById('selectAllBtn');
-        const summaryDiv = document.getElementById('summary');
         const toastEl = document.getElementById('toast');
 
+        // Aperçu image
         imageUrlInput.addEventListener('input', () => {
             const url = imageUrlInput.value.trim();
             if (url) {
@@ -623,7 +607,7 @@
         function renderRecipientList() {
             const list = getCurrentList();
             if (list.length === 0) {
-                recipientListEl.innerHTML = `<div class="empty-state">Aucun ${currentType === 'clients' ? 'client' : 'vendeur'} trouvé</div>`;
+                recipientListEl.innerHTML = `<div class="tip">Aucun ${currentType === 'clients' ? 'client' : 'vendeur'} trouvé</div>`;
                 updateSelectedCount();
                 return;
             }
@@ -636,7 +620,6 @@
                     <div class="recipient-info">
                         <div class="recipient-name">${escapeHtml(getItemName(item))}</div>
                         <div class="recipient-email">${escapeHtml(item.email || '-')}</div>
-                        ${item.city ? `<div style="font-size: 0.7rem; color: #8a9aaa;">📍 ${escapeHtml(item.city)}</div>` : ''}
                     </div>
                     <div class="recipient-check">
                         ${selectedRecipients.has(item.id) ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>'}
@@ -660,18 +643,8 @@
 
         function updateSelectedCount() {
             const count = selectedRecipients.size;
-            selectedCountEl.textContent = `${count} sélectionné${count > 1 ? 's' : ''}`;
+            selectedCountSpan.textContent = count;
             sendBtn.disabled = count === 0;
-            
-            const list = getCurrentList();
-            const selectedNames = list.filter(item => selectedRecipients.has(item.id)).map(item => getItemName(item));
-            if (selectedNames.length > 0) {
-                const preview = selectedNames.slice(0, 3).join(', ');
-                const more = selectedNames.length > 3 ? ` et ${selectedNames.length - 3} autre(s)` : '';
-                summaryDiv.innerHTML = `📧 Envoi à ${count} destinataire(s) : ${preview}${more}`;
-            } else {
-                summaryDiv.innerHTML = `ℹ️ Aucun destinataire sélectionné`;
-            }
         }
 
         selectAllBtn.addEventListener('click', () => {
@@ -696,6 +669,38 @@
             });
         });
 
+        async function saveToHistory(subject, recipientType, total, success, error) {
+    console.log("1 - Début sauvegarde");
+    
+    const dataToInsert = {
+        subject: subject,
+        recipient_type: recipientType,
+        total_recipients: total,
+        success_count: success,
+        error_count: error,
+        status: error === 0 ? 'success' : 'partial',
+        sent_by: 'supervisor',
+        sent_at: new Date().toISOString()
+    };
+    
+    console.log("2 - Données à insérer:", dataToInsert);
+    
+    try {
+        const result = await supabase
+            .from('email_history')
+            .insert(dataToInsert);
+        
+        console.log("3 - Résultat complet:", result);
+        
+        if (result.error) {
+            console.log("4 - Erreur:", result.error.message);
+        } else {
+            console.log("4 - Succès!");
+        }
+    } catch (err) {
+        console.log("5 - Exception:", err.message);
+    }
+}
         async function sendEmails() {
             if (selectedRecipients.size === 0) {
                 showToast('Sélectionnez au moins un destinataire', 'error');
@@ -704,7 +709,6 @@
 
             const subject = subjectInput.value.trim();
             const message = messageInput.value.trim();
-            const fromName = fromNameInput.value.trim();
             const replyTo = replyToInput.value.trim();
             const imageUrl = imageUrlInput.value.trim();
             const buttonUrl = buttonUrlInput.value.trim();
@@ -722,8 +726,9 @@
             const recipients = getCurrentList().filter(item => selectedRecipients.has(item.id));
             
             sendBtn.disabled = true;
-            const originalText = sendBtn.innerHTML;
-            sendBtn.innerHTML = '<div class="loader"></div> Envoi en cours...';
+            sendBtn.classList.add('animate');
+            const originalHTML = sendBtn.innerHTML;
+            sendBtn.innerHTML = '<div class="loader"></div> Envoi...';
 
             let successCount = 0;
             let errorCount = 0;
@@ -732,9 +737,10 @@
                 const recipientName = getItemName(recipient);
                 
                 const templateParams = {
+                    to_email: recipient.email,
                     to_name: recipientName,
                     message: message,
-                    from_name: fromName,
+                    from_name: "Megane Market",
                     reply_to: replyTo,
                     image_url: imageUrl || "",
                     button_url: buttonUrl || "",
@@ -750,22 +756,19 @@
                 }
             }
 
-            sendBtn.innerHTML = originalText;
+            await saveToHistory(subject, currentType, recipients.length, successCount, errorCount);
+
+            sendBtn.innerHTML = originalHTML;
             sendBtn.disabled = false;
+            setTimeout(() => sendBtn.classList.remove('animate'), 500);
 
             if (successCount > 0) {
-                showToast(`✅ ${successCount} e-mail(s) envoyé(s) avec succès${errorCount > 0 ? `, ${errorCount} erreur(s)` : ''}`, 'success');
-                subjectInput.value = '';
-                messageInput.value = '';
-                imageUrlInput.value = '';
-                buttonUrlInput.value = '';
-                buttonTextInput.value = 'Découvrir';
-                imagePreview.style.display = 'none';
+                showToast(`✅ ${successCount} e-mail(s) envoyé(s)${errorCount > 0 ? `, ${errorCount} erreur(s)` : ''}`, 'success');
                 selectedRecipients.clear();
                 renderRecipientList();
                 updateSelectedCount();
             } else {
-                showToast('❌ Erreur lors de l\'envoi des e-mails', 'error');
+                showToast('❌ Erreur lors de l\'envoi', 'error');
             }
         }
 
@@ -787,6 +790,6 @@
         
         init();
     })();
-</script>
+    </script>
 </body>
 </html>
