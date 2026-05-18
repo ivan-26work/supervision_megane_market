@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Envoi d'e-mails - Megane Market</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f0f2f5;
+            color: #1a2a3a;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .main-header {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            height: 70px;
+            margin-bottom: 24px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #5a9eff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            background: #f0f2f5;
+            border: 1px solid #d0d5dd;
+            border-radius: 40px;
+            padding: 8px 20px;
+            cursor: pointer;
+            color: #1a2a3a;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #5a9eff;
+            color: white;
+            border-color: #5a9eff;
+        }
+
+        /* Grille */
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Cartes blanches */
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #e8ecf0;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            padding: 18px 24px;
+            background: white;
+            border-bottom: 2px solid #e8ecf0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a2a3a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header h3 i {
+            color: #5a9eff;
+            font-size: 1.2rem;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        /* Toggle clients/vendeurs */
+        .recipient-tabs {
+            display: flex;
+            gap: 12px;
+            background: #f0f2f5;
+            padding: 4px;
+            border-radius: 50px;
+        }
+
+        .recipient-tab {
+            padding: 8px 24px;
+            border-radius: 40px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #8a9aaa;
+            transition: all 0.2s;
+        }
+
+        .recipient-tab.active {
+            background: #5a9eff;
+            color: white;
+        }
+
+        /* Liste des destinataires */
+        .recipient-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e8ecf0;
+            border-radius: 16px;
+            background: #fafbfc;
+        }
+
+        .recipient-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 16px;
+            border-bottom: 1px solid #e8ecf0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .recipient-item:hover {
+            background: #f0f2f5;
+        }
+
+        .recipient-item.selected {
+            background: rgba(90, 158, 255, 0.1);
+            border-left: 3px solid #5a9eff;
+        }
+
+        .recipient-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #e8ecf0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #5a9eff;
+        }
+
+        .recipient-info {
+            flex: 1;
+        }
+
+        .recipient-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #1a2a3a;
+        }
+
+        .recipient-email {
+            font-size: 0.75rem;
+            color: #8a9aaa;
+        }
+
+        .recipient-check {
+            color: #4ade80;
+        }
+
+        /* Sélection tout */
+        .select-all-btn {
+            background: #5a9eff;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .select-all-btn:hover {
+            background: #3a7ecc;
+        }
+
+        /* Champs formulaire */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1a2a3a;
+            font-size: 0.85rem;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #5a9eff;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: #fafbfc;
+            border: 1px solid #d0d5dd;
+            border-radius: 12px;
+            color: #1a2a3a;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: #5a9eff;
+            box-shadow: 0 0 0 3px rgba(90, 158, 255, 0.1);
+        }
+
+        /* Conseil */
+        .tip {
+            background: #e8f4e8;
+            border-left: 4px solid #4ade80;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: #2e7d32;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tip.warning {
+            background: #fff3e0;
+            border-left-color: #ffaa44;
+            color: #ed6c02;
+        }
+
+        /* Aperçu image */
+        .image-preview {
+            margin-top: 12px;
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 12px;
+            display: none;
+            object-fit: cover;
+            border: 1px solid #d0d5dd;
+        }
+
+        /* Ligne bouton */
+        .double-input {
+            display: flex;
+            gap: 12px;
+        }
+
+        .double-input input {
+            flex: 1;
+        }
+
+        /* Bouton envoi */
+        .btn-send {
+            width: 100%;
+            padding: 16px;
+            background: #ff4d4d;
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-send:hover {
+            background: #d63030;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+        }
+
+        .btn-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Résumé */
+        .summary {
+            background: #f0f2f5;
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #1a2a3a;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1a2a3a;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: #4ade80;
+            color: #1a2a3a;
+        }
+
+        .toast.error {
+            background: #ff4d4d;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8a9aaa;
+        }
+
+        .badge-count {
+            background: #5a9eff;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .double-input {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="main-header">
+        <div class="logo">
+            <i class="fas fa-envelope"></i> Envoi d'e-mails
+        </div>
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Retour
+        </a>
+    </header>
+
+    <div class="dashboard">
+        <!-- Carte 1 : Destinataires -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-users"></i> Destinataires</h3>
+                <div class="recipient-tabs">
+                    <button class="recipient-tab active" data-type="clients">👥 Clients</button>
+                    <button class="recipient-tab" data-type="sellers">🏪 Vendeurs</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <span id="selectedCount" class="badge-count">0 sélectionné</span>
+                    <button id="selectAllBtn" class="select-all-btn">✅ Tout sélectionner</button>
+                </div>
+                <div id="recipientList" class="recipient-list">
+                    <div class="empty-state">Chargement...</div>
+                </div>
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Conseil : Sélectionnez les destinataires qui recevront votre message. Utilisez "Tout sélectionner" pour gagner du temps.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte 2 : Informations de l'e-mail -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-edit"></i> Informations de l'e-mail</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Sujet</label>
+                    <input type="text" id="emailSubject" placeholder="Ex: Offre exceptionnelle sur Megane Market">
+                    <div class="tip">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Conseil : Un sujet court et accrocheur augmente le taux d'ouverture de 30%.</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-comment"></i> Message</label>
+                    <textarea id="emailMessage" rows="5" placeholder="Bonjour,&#10;&#10;Nous avons le plaisir de vous informer..."></textarea>
+                    <div class="tip">
+                        <i class="fas fa-heart"></i>
+                        <span>Conseil : Personnalisez votre message, soyez chaleureux et concis.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte 3 : Personnalisation -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-palette"></i> Personnalisation</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label><i class="fas fa-image"></i> Image (optionnel)</label>
+                    <input type="text" id="imageUrl" placeholder="https://exemple.com/image.jpg">
+                    <img id="imagePreview" class="image-preview" src="" alt="Aperçu">
+                    <div class="tip warning">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Ajoutez une image pour rendre votre e-mail plus attractif. Format recommandé : 600x400px.</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-link"></i> Bouton d'appel à l'action</label>
+                    <div class="double-input">
+                        <input type="text" id="buttonText" placeholder="Texte du bouton" value="Découvrir">
+                        <input type="text" id="buttonUrl" placeholder="https://..." value="https://emcsigvlopntwbfkkjkh.supabase.co/functions/v1/market.html">
+                    </div>
+                    <div class="tip">
+                        <i class="fas fa-hand-pointer"></i>
+                        <span>Conseil : Un bouton clair augmente le taux de clic. Ex: "Voir l'offre", "Acheter maintenant".</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte 4 : Expéditeur -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-user-circle"></i> Expéditeur</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label><i class="fas fa-signature"></i> Nom de l'expéditeur</label>
+                    <input type="text" id="fromName" value="Megane Market" placeholder="Votre nom ou boutique">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-reply"></i> Email de réponse</label>
+                    <input type="email" id="replyTo" value="contact@megane-market.com" placeholder="Email de réponse">
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte 5 : Envoi -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-rocket"></i> Envoi</h3>
+            </div>
+            <div class="card-body">
+                <button id="sendEmailBtn" class="btn-send">
+                    <i class="fas fa-paper-plane"></i> Envoyer le message
+                </button>
+                <div id="summary" class="summary">
+                    ℹ️ Aucun destinataire sélectionné
+                </div>
+                <div class="tip">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Les e-mails sont envoyés via EmailJS. Un rapport vous sera présenté à la fin.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    (function() {
+        const SUPABASE_URL = 'https://emcsigvlopntwbfkkjkh.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtY3NpZ3Zsb3BudHdiZmtramtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4ODE5MTgsImV4cCI6MjA5NDQ1NzkxOH0.YwYoV-azL3WEFtHoh4yoF7xTLrOwZILKCzJrGPsCs6I';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        emailjs.init({
+            publicKey: "4TkvKRRbn9qDSIjG3",
+        });
+
+        const SERVICE_ID = "Megane_market";
+        const TEMPLATE_ID = "template_ugz1f33";
+
+        let allClients = [];
+        let allSellers = [];
+        let selectedRecipients = new Set();
+        let currentType = "clients";
+
+        const recipientListEl = document.getElementById('recipientList');
+        const selectedCountEl = document.getElementById('selectedCount');
+        const sendBtn = document.getElementById('sendEmailBtn');
+        const subjectInput = document.getElementById('emailSubject');
+        const messageInput = document.getElementById('emailMessage');
+        const fromNameInput = document.getElementById('fromName');
+        const replyToInput = document.getElementById('replyTo');
+        const imageUrlInput = document.getElementById('imageUrl');
+        const imagePreview = document.getElementById('imagePreview');
+        const buttonUrlInput = document.getElementById('buttonUrl');
+        const buttonTextInput = document.getElementById('buttonText');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const summaryDiv = document.getElementById('summary');
+        const toastEl = document.getElementById('toast');
+
+        imageUrlInput.addEventListener('input', () => {
+            const url = imageUrlInput.value.trim();
+            if (url) {
+                imagePreview.src = url;
+                imagePreview.style.display = 'block';
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+
+        function showToast(message, type = 'info') {
+            toastEl.textContent = message;
+            toastEl.className = `toast ${type} show`;
+            setTimeout(() => toastEl.classList.remove('show'), 4000);
+        }
+
+        async function loadClients() {
+            const { data } = await supabase
+                .from('buyers')
+                .select('id, full_name, email, city')
+                .order('created_at', { ascending: false });
+            allClients = data || [];
+        }
+
+        async function loadSellers() {
+            const { data } = await supabase
+                .from('markets')
+                .select('id, market_name, owner_name, email, city')
+                .eq('market_active', true);
+            allSellers = data || [];
+        }
+
+        function getCurrentList() {
+            return currentType === "clients" ? allClients : allSellers;
+        }
+
+        function getItemName(item) {
+            if (currentType === "clients") {
+                return item.full_name || 'Client';
+            } else {
+                return item.market_name || item.owner_name || 'Vendeur';
+            }
+        }
+
+        function renderRecipientList() {
+            const list = getCurrentList();
+            if (list.length === 0) {
+                recipientListEl.innerHTML = `<div class="empty-state">Aucun ${currentType === 'clients' ? 'client' : 'vendeur'} trouvé</div>`;
+                updateSelectedCount();
+                return;
+            }
+
+            recipientListEl.innerHTML = list.map(item => `
+                <div class="recipient-item ${selectedRecipients.has(item.id) ? 'selected' : ''}" data-id="${item.id}">
+                    <div class="recipient-avatar">
+                        <i class="fas ${currentType === 'clients' ? 'fa-user' : 'fa-store'}"></i>
+                    </div>
+                    <div class="recipient-info">
+                        <div class="recipient-name">${escapeHtml(getItemName(item))}</div>
+                        <div class="recipient-email">${escapeHtml(item.email || '-')}</div>
+                        ${item.city ? `<div style="font-size: 0.7rem; color: #8a9aaa;">📍 ${escapeHtml(item.city)}</div>` : ''}
+                    </div>
+                    <div class="recipient-check">
+                        ${selectedRecipients.has(item.id) ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>'}
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.recipient-item').forEach(item => {
+                const id = item.getAttribute('data-id');
+                item.addEventListener('click', () => {
+                    if (selectedRecipients.has(id)) {
+                        selectedRecipients.delete(id);
+                    } else {
+                        selectedRecipients.add(id);
+                    }
+                    renderRecipientList();
+                    updateSelectedCount();
+                });
+            });
+        }
+
+        function updateSelectedCount() {
+            const count = selectedRecipients.size;
+            selectedCountEl.textContent = `${count} sélectionné${count > 1 ? 's' : ''}`;
+            sendBtn.disabled = count === 0;
+            
+            const list = getCurrentList();
+            const selectedNames = list.filter(item => selectedRecipients.has(item.id)).map(item => getItemName(item));
+            if (selectedNames.length > 0) {
+                const preview = selectedNames.slice(0, 3).join(', ');
+                const more = selectedNames.length > 3 ? ` et ${selectedNames.length - 3} autre(s)` : '';
+                summaryDiv.innerHTML = `📧 Envoi à ${count} destinataire(s) : ${preview}${more}`;
+            } else {
+                summaryDiv.innerHTML = `ℹ️ Aucun destinataire sélectionné`;
+            }
+        }
+
+        selectAllBtn.addEventListener('click', () => {
+            const list = getCurrentList();
+            if (selectedRecipients.size === list.length) {
+                selectedRecipients.clear();
+            } else {
+                list.forEach(item => selectedRecipients.add(item.id));
+            }
+            renderRecipientList();
+            updateSelectedCount();
+        });
+
+        document.querySelectorAll('.recipient-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.recipient-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentType = tab.getAttribute('data-type');
+                selectedRecipients.clear();
+                renderRecipientList();
+                updateSelectedCount();
+            });
+        });
+
+        async function sendEmails() {
+            if (selectedRecipients.size === 0) {
+                showToast('Sélectionnez au moins un destinataire', 'error');
+                return;
+            }
+
+            const subject = subjectInput.value.trim();
+            const message = messageInput.value.trim();
+            const fromName = fromNameInput.value.trim();
+            const replyTo = replyToInput.value.trim();
+            const imageUrl = imageUrlInput.value.trim();
+            const buttonUrl = buttonUrlInput.value.trim();
+            const buttonText = buttonTextInput.value.trim() || "Découvrir";
+
+            if (!subject) {
+                showToast('Le sujet est requis', 'error');
+                return;
+            }
+            if (!message) {
+                showToast('Le message est requis', 'error');
+                return;
+            }
+
+            const recipients = getCurrentList().filter(item => selectedRecipients.has(item.id));
+            
+            sendBtn.disabled = true;
+            const originalText = sendBtn.innerHTML;
+            sendBtn.innerHTML = '<div class="loader"></div> Envoi en cours...';
+
+            let successCount = 0;
+            let errorCount = 0;
+
+            for (const recipient of recipients) {
+                const recipientName = getItemName(recipient);
+                
+                const templateParams = {
+                    to_name: recipientName,
+                    message: message,
+                    from_name: fromName,
+                    reply_to: replyTo,
+                    image_url: imageUrl || "",
+                    button_url: buttonUrl || "",
+                    button_text: buttonText
+                };
+                
+                try {
+                    await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
+                    successCount++;
+                } catch (err) {
+                    console.error(`Erreur envoi à ${recipient.email}:`, err);
+                    errorCount++;
+                }
+            }
+
+            sendBtn.innerHTML = originalText;
+            sendBtn.disabled = false;
+
+            if (successCount > 0) {
+                showToast(`✅ ${successCount} e-mail(s) envoyé(s) avec succès${errorCount > 0 ? `, ${errorCount} erreur(s)` : ''}`, 'success');
+                subjectInput.value = '';
+                messageInput.value = '';
+                imageUrlInput.value = '';
+                buttonUrlInput.value = '';
+                buttonTextInput.value = 'Découvrir';
+                imagePreview.style.display = 'none';
+                selectedRecipients.clear();
+                renderRecipientList();
+                updateSelectedCount();
+            } else {
+                showToast('❌ Erreur lors de l\'envoi des e-mails', 'error');
+            }
+        }
+
+        sendBtn.addEventListener('click', sendEmails);
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function init() {
+            await loadClients();
+            await loadSellers();
+            renderRecipientList();
+            updateSelectedCount();
+        }
+        
+        init();
+    })();
+</script>
+</body>
+</html>
