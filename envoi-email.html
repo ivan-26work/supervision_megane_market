@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Envoi d'e-mails - Megane Market</title>
+    <title>Envoi d'e-mails - Supervision</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -30,15 +30,15 @@
             left: 16px;
             right: 16px;
             z-index: 1000;
-            background: white;
+            background: #ffffff;
             border-radius: 60px;
             height: 60px;
             padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #e8ecf0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #5a9eff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .logo-area {
@@ -64,12 +64,12 @@
         }
 
         .header-btn {
-            background: #f0f2f5;
-            border: 1px solid #d0d5dd;
+            background: rgba(90, 158, 255, 0.1);
+            border: 1px solid #5a9eff;
             border-radius: 40px;
             padding: 8px 16px;
             cursor: pointer;
-            color: #1a2a3a;
+            color: #5a9eff;
             text-decoration: none;
             font-weight: 500;
             font-size: 0.8rem;
@@ -82,30 +82,36 @@
         .header-btn:hover {
             background: #5a9eff;
             color: white;
-            border-color: #5a9eff;
+            transform: translateX(-4px);
         }
 
         /* ============ MAIN CONTENT ============ */
         .main-content {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         /* ============ CARTES ============ */
         .card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
             overflow: hidden;
             margin-bottom: 24px;
             border: 1px solid #e8ecf0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #5a9eff;
+            box-shadow: 0 4px 12px rgba(90, 158, 255, 0.1);
         }
 
         .card-header {
             padding: 18px 24px;
-            background: white;
-            border-bottom: 2px solid #e8ecf0;
+            background: #fafbfc;
+            border-bottom: 1px solid #e8ecf0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -114,16 +120,16 @@
         }
 
         .card-header h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1a2a3a;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #5a9eff;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .card-header h3 i {
-            color: #5a9eff;
+            font-size: 1rem;
         }
 
         .card-body {
@@ -133,19 +139,20 @@
         /* ============ ONGLETS ============ */
         .recipient-tabs {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             background: #f0f2f5;
             padding: 4px;
             border-radius: 50px;
         }
 
         .recipient-tab {
-            padding: 8px 24px;
+            padding: 6px 20px;
             border-radius: 40px;
             background: transparent;
             border: none;
             cursor: pointer;
             font-weight: 600;
+            font-size: 0.8rem;
             color: #8a9aaa;
             transition: all 0.2s;
         }
@@ -162,6 +169,20 @@
             border: 1px solid #e8ecf0;
             border-radius: 16px;
             background: #fafbfc;
+        }
+
+        .recipient-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .recipient-list::-webkit-scrollbar-track {
+            background: #e8ecf0;
+            border-radius: 3px;
+        }
+
+        .recipient-list::-webkit-scrollbar-thumb {
+            background: #5a9eff;
+            border-radius: 3px;
         }
 
         .recipient-item {
@@ -216,38 +237,40 @@
 
         /* ============ FORMULAIRES ============ */
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: #1a2a3a;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .form-group label i {
-            margin-right: 8px;
+            margin-right: 6px;
             color: #5a9eff;
         }
 
-        .form-group input, .form-group textarea {
+        .form-group input, 
+        .form-group textarea {
             width: 100%;
-            padding: 12px 16px;
+            padding: 12px 14px;
             background: #fafbfc;
-            border: 1px solid #d0d5dd;
+            border: 1px solid #e8ecf0;
             border-radius: 12px;
             color: #1a2a3a;
             font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             outline: none;
             transition: all 0.2s;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input:focus, 
+        .form-group textarea:focus {
             border-color: #5a9eff;
-            box-shadow: 0 0 0 3px rgba(90, 158, 255, 0.1);
+            box-shadow: 0 0 0 2px rgba(90, 158, 255, 0.1);
         }
 
         .image-preview {
@@ -257,7 +280,7 @@
             border-radius: 12px;
             display: block;
             object-fit: cover;
-            border: 1px solid #d0d5dd;
+            border: 1px solid #e8ecf0;
         }
 
         .tip {
@@ -265,7 +288,7 @@
             border-left: 4px solid #4ade80;
             padding: 12px 16px;
             border-radius: 12px;
-            margin-top: 8px;
+            margin-top: 12px;
             font-size: 0.75rem;
             color: #2e7d32;
             display: flex;
@@ -279,7 +302,7 @@
             bottom: 16px;
             left: 16px;
             right: 16px;
-            background: white;
+            background: #ffffff;
             border-radius: 60px;
             height: 60px;
             padding: 0 20px;
@@ -287,12 +310,12 @@
             align-items: center;
             justify-content: space-between;
             z-index: 1000;
-            border: 1px solid #e8ecf0;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #5a9eff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .footer-counter {
-            background: #f0f2f5;
+            background: rgba(90, 158, 255, 0.1);
             padding: 8px 16px;
             border-radius: 40px;
             font-size: 0.85rem;
@@ -395,10 +418,26 @@
             font-weight: 600;
             font-size: 0.75rem;
             cursor: pointer;
+            transition: all 0.2s;
         }
 
         .select-all-btn:hover {
             background: #3a7ecc;
+        }
+
+        .badge-count {
+            background: rgba(90, 158, 255, 0.1);
+            color: #5a9eff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8a9aaa;
         }
 
         @media (max-width: 768px) {
@@ -421,15 +460,15 @@
             .header-btn span {
                 display: none;
             }
-            .header-btn i {
-                margin: 0;
+            .recipient-tab {
+                padding: 5px 14px;
+                font-size: 0.7rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER FIXE -->
     <header class="main-header">
         <div class="logo-area">
             <i class="fas fa-envelope"></i>
@@ -445,9 +484,7 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <div class="main-content">
-        <!-- Carte 1 : Destinataires -->
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-users"></i> Destinataires</h3>
@@ -459,9 +496,10 @@
             <div class="card-body">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <button id="selectAllBtn" class="select-all-btn">✅ Tout sélectionner</button>
+                    <span id="selectedCount" class="badge-count">0 sélectionné</span>
                 </div>
                 <div id="recipientList" class="recipient-list">
-                    <div class="tip">Chargement...</div>
+                    <div class="empty-state">Chargement...</div>
                 </div>
                 <div class="tip">
                     <i class="fas fa-lightbulb"></i>
@@ -470,7 +508,6 @@
             </div>
         </div>
 
-        <!-- Carte 2 : Informations de l'e-mail -->
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-edit"></i> Informations de l'e-mail</h3>
@@ -488,7 +525,6 @@
             </div>
         </div>
 
-        <!-- Carte 3 : Personnalisation -->
         <div class="card">
             <div class="card-header">
                 <h3><i class="fas fa-palette"></i> Personnalisation</h3>
@@ -514,10 +550,9 @@
         </div>
     </div>
 
-    <!-- FOOTER FIXE -->
     <footer class="main-footer">
         <div class="footer-counter">
-            <i class="fas fa-users"></i> <span id="selectedCount">0</span> destinataire(s)
+            <i class="fas fa-users"></i> <span id="selectedCountFooter">0</span> destinataire(s)
         </div>
         <button id="sendEmailBtn" class="btn-send">
             <i class="fas fa-paper-plane"></i> Envoyer
@@ -548,6 +583,7 @@
 
         const recipientListEl = document.getElementById('recipientList');
         const selectedCountSpan = document.getElementById('selectedCount');
+        const selectedCountFooter = document.getElementById('selectedCountFooter');
         const sendBtn = document.getElementById('sendEmailBtn');
         const subjectInput = document.getElementById('emailSubject');
         const messageInput = document.getElementById('emailMessage');
@@ -559,7 +595,6 @@
         const selectAllBtn = document.getElementById('selectAllBtn');
         const toastEl = document.getElementById('toast');
 
-        // Aperçu image
         imageUrlInput.addEventListener('input', () => {
             const url = imageUrlInput.value.trim();
             if (url) {
@@ -588,7 +623,7 @@
             const { data } = await supabase
                 .from('markets')
                 .select('id, market_name, owner_name, email, city')
-                .eq('market_active', true);
+                .order('created_at', { ascending: false });
             allSellers = data || [];
         }
 
@@ -607,7 +642,7 @@
         function renderRecipientList() {
             const list = getCurrentList();
             if (list.length === 0) {
-                recipientListEl.innerHTML = `<div class="tip">Aucun ${currentType === 'clients' ? 'client' : 'vendeur'} trouvé</div>`;
+                recipientListEl.innerHTML = `<div class="empty-state">Aucun ${currentType === 'clients' ? 'client' : 'vendeur'} trouvé</div>`;
                 updateSelectedCount();
                 return;
             }
@@ -643,7 +678,8 @@
 
         function updateSelectedCount() {
             const count = selectedRecipients.size;
-            selectedCountSpan.textContent = count;
+            selectedCountSpan.textContent = `${count} sélectionné${count > 1 ? 's' : ''}`;
+            if (selectedCountFooter) selectedCountFooter.textContent = count;
             sendBtn.disabled = count === 0;
         }
 
@@ -670,37 +706,38 @@
         });
 
         async function saveToHistory(subject, recipientType, total, success, error) {
-    console.log("1 - Début sauvegarde");
-    
-    const dataToInsert = {
-        subject: subject,
-        recipient_type: recipientType,
-        total_recipients: total,
-        success_count: success,
-        error_count: error,
-        status: error === 0 ? 'success' : 'partial',
-        sent_by: 'supervisor',
-        sent_at: new Date().toISOString()
-    };
-    
-    console.log("2 - Données à insérer:", dataToInsert);
-    
-    try {
-        const result = await supabase
-            .from('email_history')
-            .insert(dataToInsert);
-        
-        console.log("3 - Résultat complet:", result);
-        
-        if (result.error) {
-            console.log("4 - Erreur:", result.error.message);
-        } else {
-            console.log("4 - Succès!");
+            console.log("1 - Début sauvegarde");
+            
+            const dataToInsert = {
+                subject: subject,
+                recipient_type: recipientType,
+                total_recipients: total,
+                success_count: success,
+                error_count: error,
+                status: error === 0 ? 'success' : 'partial',
+                sent_by: 'supervisor',
+                sent_at: new Date().toISOString()
+            };
+            
+            console.log("2 - Données à insérer:", dataToInsert);
+            
+            try {
+                const result = await supabase
+                    .from('email_history')
+                    .insert(dataToInsert);
+                
+                console.log("3 - Résultat complet:", result);
+                
+                if (result.error) {
+                    console.log("4 - Erreur:", result.error.message);
+                } else {
+                    console.log("4 - Succès!");
+                }
+            } catch (err) {
+                console.log("5 - Exception:", err.message);
+            }
         }
-    } catch (err) {
-        console.log("5 - Exception:", err.message);
-    }
-}
+
         async function sendEmails() {
             if (selectedRecipients.size === 0) {
                 showToast('Sélectionnez au moins un destinataire', 'error');

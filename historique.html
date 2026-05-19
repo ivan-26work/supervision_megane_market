@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Historique des envois - Megane Market</title>
+    <title>Historique des envois - Supervision</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -29,56 +29,46 @@
             left: 16px;
             right: 16px;
             z-index: 1000;
-            background: white;
+            background: #ffffff;
             border-radius: 60px;
             height: 60px;
             padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            border: 1px solid #e8ecf0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #5a9eff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
-        .search-container {
-            flex: 1;
-            position: relative;
-            max-width: 300px;
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .search-container i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #8a9aaa;
-            font-size: 0.8rem;
+        .logo-area i {
+            font-size: 1.2rem;
+            color: #5a9eff;
         }
 
-        .search-container input {
-            width: 100%;
-            padding: 8px 14px 8px 38px;
-            background: #f0f2f5;
-            border: 1px solid #d0d5dd;
-            border-radius: 40px;
+        .logo-area span {
+            font-size: 0.95rem;
+            font-weight: 600;
             color: #1a2a3a;
-            font-size: 0.8rem;
-            outline: none;
-            font-family: 'DM Sans', sans-serif;
         }
 
-        .search-container input:focus {
-            border-color: #5a9eff;
+        .header-actions {
+            display: flex;
+            gap: 12px;
         }
 
         .header-btn {
-            background: #f0f2f5;
-            border: 1px solid #d0d5dd;
+            background: rgba(90, 158, 255, 0.1);
+            border: 1px solid #5a9eff;
             border-radius: 40px;
             padding: 8px 16px;
             cursor: pointer;
-            color: #1a2a3a;
+            color: #5a9eff;
             text-decoration: none;
             font-weight: 500;
             font-size: 0.8rem;
@@ -86,209 +76,147 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            white-space: nowrap;
         }
 
         .header-btn:hover {
             background: #5a9eff;
             color: white;
-            border-color: #5a9eff;
+            transform: translateX(-4px);
         }
 
-        /* ============ ONGLETS PILULES ============ */
-        .tabs-container {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin: 20px 16px;
-        }
-
-        .pill-btn {
-            padding: 10px 28px;
-            border-radius: 40px;
-            background: white;
-            border: 1px solid #d0d5dd;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: #1a2a3a;
-            font-family: 'DM Sans', sans-serif;
-        }
-
-        .pill-btn.active {
-            background: #5a9eff;
-            border-color: #5a9eff;
-            color: white;
-        }
-
-        .pill-btn:hover:not(.active) {
-            border-color: #5a9eff;
-            color: #5a9eff;
-        }
-
-        /* ============ VUES ============ */
-        .view {
-            max-width: 800px;
+        /* ============ MAIN CONTENT ============ */
+        .main-content {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 16px;
-            animation: fadeIn 0.3s ease;
+            padding: 0 20px;
         }
 
-        .view.hidden {
-            display: none;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ============ CARTE LISTE ============ */
+        /* ============ CARTE ============ */
         .card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
             overflow: hidden;
             border: 1px solid #e8ecf0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #5a9eff;
+            box-shadow: 0 4px 12px rgba(90, 158, 255, 0.1);
         }
 
         .card-header {
-            padding: 18px 20px;
-            background: white;
-            border-bottom: 2px solid #e8ecf0;
+            padding: 18px 24px;
+            background: #fafbfc;
+            border-bottom: 1px solid #e8ecf0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .card-header h3 {
             font-size: 1rem;
-            font-weight: 600;
-            color: #1a2a3a;
+            font-weight: 700;
+            color: #5a9eff;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .card-header h3 i {
-            color: #5a9eff;
-        }
-
-        /* ============ LISTE HISTORIQUE ============ */
-        .history-list {
-            padding: 0;
-        }
-
-        .history-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        /* ============ FILTRES ============ */
+        .filters-bar {
             padding: 16px 20px;
-            border-bottom: 1px solid #e8ecf0;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .history-item:hover {
             background: #fafbfc;
-            transform: translateX(4px);
-        }
-
-        .history-info {
+            border-bottom: 1px solid #e8ecf0;
             display: flex;
-            align-items: center;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
-        }
-
-        .history-type {
-            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
         }
 
-        .type-clients {
-            background: rgba(90, 158, 255, 0.1);
-            color: #5a9eff;
-        }
-
-        .type-sellers {
-            background: rgba(255, 77, 77, 0.1);
-            color: #ff4d4d;
-        }
-
-        .history-date {
-            font-size: 0.8rem;
-            color: #8a9aaa;
-        }
-
-        .history-time {
-            font-size: 0.8rem;
-            color: #8a9aaa;
-        }
-
-        .history-arrow {
-            color: #d0d5dd;
-            font-size: 0.8rem;
-        }
-
-        /* ============ CARTE DÉTAIL ============ */
-        .detail-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            border: 1px solid #e8ecf0;
-            margin-bottom: 20px;
-        }
-
-        .detail-card-header {
-            padding: 18px 20px;
-            background: #fafbfc;
-            border-bottom: 1px solid #e8ecf0;
-        }
-
-        .detail-card-header h3 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #5a9eff;
+        .filter-group {
             display: flex;
             align-items: center;
             gap: 8px;
+            background: #ffffff;
+            padding: 6px 12px;
+            border-radius: 40px;
+            border: 1px solid #e8ecf0;
         }
 
-        .detail-card-body {
-            padding: 20px;
+        .filter-group i {
+            color: #8a9aaa;
+            font-size: 0.8rem;
         }
 
-        .detail-row {
+        .filter-group select, .filter-group input {
+            border: none;
+            background: transparent;
+            padding: 6px 0;
+            font-size: 0.8rem;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+            color: #1a2a3a;
+        }
+
+        .refresh-filter {
+            background: #5a9eff;
+            border: none;
+            border-radius: 40px;
+            padding: 8px 20px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
             display: flex;
-            padding: 12px 0;
-            border-bottom: 1px solid #e8ecf0;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
         }
 
-        .detail-row:last-child {
-            border-bottom: none;
+        .refresh-filter:hover {
+            background: #3a7ecc;
+            transform: translateY(-1px);
         }
 
-        .detail-label {
-            width: 130px;
+        /* ============ TABLEAU ============ */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th {
+            text-align: left;
+            padding: 16px 20px;
+            background: #fafbfc;
             font-size: 0.75rem;
             font-weight: 600;
             color: #8a9aaa;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e8ecf0;
         }
 
-        .detail-value {
-            flex: 1;
+        .history-table td {
+            padding: 16px 20px;
             font-size: 0.85rem;
+            border-bottom: 1px solid #e8ecf0;
             color: #1a2a3a;
-            word-break: break-word;
         }
 
-        .detail-badge {
+        .history-table tr:hover td {
+            background: #fafbfc;
+        }
+
+        /* Badges */
+        .badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -299,16 +227,70 @@
         }
 
         .badge-success {
-            background: rgba(74, 222, 128, 0.15);
+            background: rgba(74, 222, 128, 0.12);
             color: #2e7d32;
         }
 
         .badge-partial {
-            background: rgba(255, 170, 68, 0.15);
+            background: rgba(255, 170, 68, 0.12);
             color: #ed6c02;
         }
 
-        /* ============ LOADER ============ */
+        .badge-clients {
+            background: rgba(90, 158, 255, 0.1);
+            color: #5a9eff;
+        }
+
+        .badge-sellers {
+            background: rgba(255, 77, 77, 0.1);
+            color: #ff4d4d;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px;
+            border-top: 1px solid #e8ecf0;
+        }
+
+        .page-btn {
+            background: #f0f2f5;
+            border: 1px solid #e8ecf0;
+            border-radius: 40px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .page-btn:hover {
+            background: #5a9eff;
+            color: white;
+            border-color: #5a9eff;
+        }
+
+        .page-btn.active {
+            background: #5a9eff;
+            color: white;
+            border-color: #5a9eff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8a9aaa;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            color: #e8ecf0;
+        }
+
+        /* Loader */
         .loader {
             display: flex;
             justify-content: center;
@@ -329,107 +311,109 @@
             to { transform: rotate(360deg); }
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #8a9aaa;
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 16px;
-            color: #d0d5dd;
-        }
-
-        /* ============ BOUTON RETOUR DETAIL ============ */
-        .back-detail-btn {
-            background: #f0f2f5;
-            border: 1px solid #d0d5dd;
-            border-radius: 40px;
-            padding: 8px 20px;
-            cursor: pointer;
-            color: #1a2a3a;
-            font-weight: 500;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .back-detail-btn:hover {
-            background: #5a9eff;
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1a2a3a;
             color: white;
-            border-color: #5a9eff;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1100;
         }
 
-        @media (max-width: 600px) {
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: #4ade80;
+            color: #1a2a3a;
+        }
+
+        @media (max-width: 768px) {
             .main-header {
                 left: 12px;
                 right: 12px;
-                padding: 0 12px;
             }
-            .search-container {
-                max-width: 180px;
+            .history-table th, .history-table td {
+                padding: 12px 16px;
+            }
+            .card-header h3 {
+                font-size: 0.9rem;
             }
             .header-btn span {
                 display: none;
             }
-            .pill-btn {
-                padding: 8px 20px;
-                font-size: 0.75rem;
+            .filters-bar {
+                flex-direction: column;
+                align-items: stretch;
             }
-            .history-info {
-                gap: 10px;
-            }
-            .history-date, .history-time {
-                font-size: 0.7rem;
-            }
-            .detail-label {
-                width: 100px;
+            .filter-group {
+                justify-content: space-between;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER FIXE -->
     <header class="main-header">
-        <div class="search-container">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Rechercher...">
+        <div class="logo-area">
+            <i class="fas fa-history"></i>
+            <span>Historique des envois</span>
         </div>
-        <a href="envoi-email.html" class="header-btn" id="backToEnvoi">
-            <i class="fas fa-arrow-left"></i> <span>Retour</span>
-        </a>
+        <div class="header-actions">
+            <a href="envoi-email.html" class="header-btn">
+                <i class="fas fa-envelope"></i> <span>Nouvel envoi</span>
+            </a>
+            <a href="index.html" class="header-btn">
+                <i class="fas fa-arrow-left"></i> <span>Retour</span>
+            </a>
+        </div>
     </header>
 
-    <!-- VUE LISTE -->
-    <div id="listView" class="view">
-        <div class="tabs-container">
-            <button class="pill-btn active" data-type="clients">👥 Clients</button>
-            <button class="pill-btn" data-type="sellers">🏪 Vendeurs</button>
-            <button class="pill-btn" data-type="all">📋 Tous</button>
-        </div>
-
+    <div class="main-content">
         <div class="card">
             <div class="card-header">
-                <h3><i class="fas fa-history"></i> Historique des envois</h3>
+                <h3><i class="fas fa-list"></i> Tous les envois</h3>
             </div>
-            <div id="historyList" class="history-list">
-                <div class="loader"><div class="spinner"></div></div>
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <i class="fas fa-filter"></i>
+                    <select id="filterStatus">
+                        <option value="all">Tous les statuts</option>
+                        <option value="success">Succès</option>
+                        <option value="partial">Partiel</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <i class="fas fa-users"></i>
+                    <select id="filterType">
+                        <option value="all">Tous les types</option>
+                        <option value="clients">Clients</option>
+                        <option value="sellers">Vendeurs</option>
+                    </select>
+                </div>
+                <button id="refreshBtn" class="refresh-filter">
+                    <i class="fas fa-sync-alt"></i> Rafraîchir
+                </button>
             </div>
+            <div class="table-container" id="tableContainer">
+                <div class="loader">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+            <div id="pagination" class="pagination"></div>
         </div>
     </div>
 
-    <!-- VUE DÉTAIL -->
-    <div id="detailView" class="view hidden">
-        <button id="backToListBtn" class="back-detail-btn">
-            <i class="fas fa-arrow-left"></i> Retour à la liste
-        </button>
-        <div id="detailContent"></div>
-    </div>
+    <div id="toast" class="toast"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -440,15 +424,21 @@
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
         let allHistory = [];
-        let currentType = 'clients';
-        let searchTerm = '';
+        let currentPage = 1;
+        const itemsPerPage = 20;
 
-        const listView = document.getElementById('listView');
-        const detailView = document.getElementById('detailView');
-        const historyListEl = document.getElementById('historyList');
-        const searchInput = document.getElementById('searchInput');
-        const detailContent = document.getElementById('detailContent');
-        const backToListBtn = document.getElementById('backToListBtn');
+        const tableContainer = document.getElementById('tableContainer');
+        const paginationDiv = document.getElementById('pagination');
+        const filterStatus = document.getElementById('filterStatus');
+        const filterType = document.getElementById('filterType');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const toastEl = document.getElementById('toast');
+
+        function showToast(message, type = 'info') {
+            toastEl.textContent = message;
+            toastEl.className = `toast ${type} show`;
+            setTimeout(() => toastEl.classList.remove('show'), 3000);
+        }
 
         async function loadHistory() {
             try {
@@ -459,161 +449,115 @@
 
                 if (error) throw error;
                 allHistory = data || [];
-                renderList();
+                renderTable();
             } catch (err) {
                 console.error('Erreur:', err);
-                historyListEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Erreur chargement</p></div>`;
+                tableContainer.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Erreur chargement historique</p></div>`;
+                showToast('Erreur chargement', 'error');
             }
         }
 
         function getFilteredHistory() {
-            let filtered = [...allHistory];
+            const status = filterStatus.value;
+            const type = filterType.value;
 
-            if (currentType !== 'all') {
-                filtered = filtered.filter(item => item.recipient_type === currentType);
-            }
-
-            if (searchTerm.trim() !== '') {
-                const term = searchTerm.toLowerCase();
-                filtered = filtered.filter(item => 
-                    item.subject?.toLowerCase().includes(term)
-                );
-            }
-
-            return filtered;
+            return allHistory.filter(item => {
+                if (status !== 'all' && item.status !== status) return false;
+                if (type !== 'all' && item.recipient_type !== type) return false;
+                return true;
+            });
         }
 
         function formatDate(dateStr) {
             if (!dateStr) return '-';
             const date = new Date(dateStr);
-            return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        }
-
-        function formatTime(dateStr) {
-            if (!dateStr) return '-';
-            const date = new Date(dateStr);
-            return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-        }
-
-        function getTypeLabel(type) {
-            if (type === 'clients') {
-                return '<span class="history-type type-clients"><i class="fas fa-users"></i> Client</span>';
-            }
-            return '<span class="history-type type-sellers"><i class="fas fa-store"></i> Vendeur</span>';
-        }
-
-        function renderList() {
-            const filtered = getFilteredHistory();
-
-            if (filtered.length === 0) {
-                historyListEl.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucun historique</p></div>`;
-                return;
-            }
-
-            historyListEl.innerHTML = filtered.map(item => `
-                <div class="history-item" data-id="${item.id}">
-                    <div class="history-info">
-                        ${getTypeLabel(item.recipient_type)}
-                        <span class="history-date">${formatDate(item.sent_at)}</span>
-                        <span class="history-time">${formatTime(item.sent_at)}</span>
-                    </div>
-                    <div class="history-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                </div>
-            `).join('');
-
-            document.querySelectorAll('.history-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const id = parseInt(item.getAttribute('data-id'));
-                    const historyItem = allHistory.find(h => h.id === id);
-                    if (historyItem) showDetail(historyItem);
-                });
+            return date.toLocaleDateString('fr-FR', { 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
             });
         }
 
-        function showDetail(item) {
-            const statusText = item.status === 'success' ? 'Succès' : (item.status === 'partial' ? 'Partiel' : 'En attente');
-            const statusClass = item.status === 'success' ? 'badge-success' : 'badge-partial';
-            const typeText = item.recipient_type === 'clients' ? 'Clients' : 'Vendeurs';
-            const typeClass = item.recipient_type === 'clients' ? 'type-clients' : 'type-sellers';
+        function getStatusBadge(status) {
+            switch(status) {
+                case 'success':
+                    return '<span class="badge badge-success"><i class="fas fa-check-circle"></i> Succès</span>';
+                case 'partial':
+                    return '<span class="badge badge-partial"><i class="fas fa-exclamation-triangle"></i> Partiel</span>';
+                default:
+                    return '<span class="badge badge-partial"><i class="fas fa-clock"></i> En attente</span>';
+            }
+        }
 
-            detailContent.innerHTML = `
-                <div class="detail-card">
-                    <div class="detail-card-header">
-                        <h3><i class="fas fa-info-circle"></i> Informations générales</h3>
-                    </div>
-                    <div class="detail-card-body">
-                        <div class="detail-row">
-                            <div class="detail-label">Statut</div>
-                            <div class="detail-value">
-                                <span class="detail-badge ${statusClass}">${statusText}</span>
-                            </div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Type</div>
-                            <div class="detail-value">
-                                <span class="history-type ${typeClass}">${typeText}</span>
-                            </div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Date d'envoi</div>
-                            <div class="detail-value">${formatDate(item.sent_at)} à ${formatTime(item.sent_at)}</div>
-                        </div>
-                    </div>
-                </div>
+        function getTypeBadge(type) {
+            if (type === 'clients') {
+                return '<span class="badge badge-clients"><i class="fas fa-users"></i> Clients</span>';
+            }
+            return '<span class="badge badge-sellers"><i class="fas fa-store"></i> Vendeurs</span>';
+        }
 
-                <div class="detail-card">
-                    <div class="detail-card-header">
-                        <h3><i class="fas fa-envelope"></i> Détail de l'envoi</h3>
-                    </div>
-                    <div class="detail-card-body">
-                        <div class="detail-row">
-                            <div class="detail-label">Sujet</div>
-                            <div class="detail-value">${escapeHtml(item.subject || '-')}</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Total destinataires</div>
-                            <div class="detail-value">${item.total_recipients || 0}</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Envoyés avec succès</div>
-                            <div class="detail-value" style="color: #2e7d32;">${item.success_count || 0}</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Échecs</div>
-                            <div class="detail-value" style="color: #d63030;">${item.error_count || 0}</div>
-                        </div>
-                    </div>
-                </div>
+        function renderTable() {
+            const filtered = getFilteredHistory();
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            const start = (currentPage - 1) * itemsPerPage;
+            const paginated = filtered.slice(start, start + itemsPerPage);
 
-                <div class="detail-card">
-                    <div class="detail-card-header">
-                        <h3><i class="fas fa-user"></i> Expéditeur</h3>
-                    </div>
-                    <div class="detail-card-body">
-                        <div class="detail-row">
-                            <div class="detail-label">Envoyé par</div>
-                            <div class="detail-value">${escapeHtml(item.sent_by || 'Superviseur')}</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">ID de l'envoi</div>
-                            <div class="detail-value">#${item.id}</div>
-                        </div>
-                    </div>
-                </div>
+            if (filtered.length === 0) {
+                tableContainer.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucun historique d'envoi</p></div>`;
+                paginationDiv.innerHTML = '';
+                return;
+            }
+
+            tableContainer.innerHTML = `
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Sujet</th>
+                            <th>Destinataires</th>
+                            <th>Statut</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${paginated.map(item => `
+                            <tr>
+                                <td style="white-space: nowrap;">${formatDate(item.sent_at)}</td>
+                                <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(item.subject || '-')}</td>
+                                <td>${item.total_recipients || 0} (${item.success_count || 0} OK / ${item.error_count || 0} KO)</td>
+                                <td>${getStatusBadge(item.status)}</td>
+                                <td>${getTypeBadge(item.recipient_type)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
             `;
 
-            // Changer de vue
-            listView.classList.add('hidden');
-            detailView.classList.remove('hidden');
+            paginationDiv.innerHTML = '';
+            if (totalPages > 1) {
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                    btn.addEventListener('click', () => {
+                        currentPage = i;
+                        renderTable();
+                    });
+                    paginationDiv.appendChild(btn);
+                }
+            }
         }
 
-        function backToList() {
-            detailView.classList.add('hidden');
-            listView.classList.remove('hidden');
-            renderList();
+        function refresh() {
+            currentPage = 1;
+            loadHistory();
         }
+
+        filterStatus.addEventListener('change', () => { currentPage = 1; renderTable(); });
+        filterType.addEventListener('change', () => { currentPage = 1; renderTable(); });
+        refreshBtn.addEventListener('click', refresh);
 
         function escapeHtml(text) {
             if (!text) return '';
@@ -621,23 +565,6 @@
             div.textContent = text;
             return div.innerHTML;
         }
-
-        // Événements
-        document.querySelectorAll('.pill-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentType = btn.getAttribute('data-type');
-                renderList();
-            });
-        });
-
-        searchInput.addEventListener('input', (e) => {
-            searchTerm = e.target.value;
-            renderList();
-        });
-
-        backToListBtn.addEventListener('click', backToList);
 
         loadHistory();
     })();

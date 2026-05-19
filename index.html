@@ -6,67 +6,28 @@
     <title>Supervision - Megane Market</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Styles additionnels pour le header */
-        .header-actions {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-        .email-btn {
-            background: #1a2a3a;
-            border: 1px solid #2a3a4a;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: #eef2ff;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-        .email-btn:hover {
-            background: #4ade80;
-            color: white;
-            border-color: #4ade80;
-            transform: scale(1.05);
-        }
-        .refresh-btn {
-            background: #1a2a3a;
-            border: 1px solid #2a3a4a;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: #eef2ff;
-            transition: all 0.2s;
-        }
-        .refresh-btn:hover {
-            background: #5a9eff;
-            color: white;
-            transform: scale(1.05);
-        }
-    </style>
+    <link rel="stylesheet" href="supervision.css">
 </head>
 <body>
 
     <header class="main-header">
+        <div class="logo-area">
+            <i class="fas fa-chart-line"></i>
+            <span>Supervision Megane Market</span>
+        </div>
         <div class="search-container">
             <i class="fas fa-search"></i>
             <input type="text" id="globalSearch" placeholder="Rechercher...">
         </div>
         <div class="header-actions">
-            <a href="envoi-email.html" class="email-btn" title="Envoyer un e-mail">
+            <a href="envoi-email.html" class="header-btn" title="Envoyer un email">
                 <i class="fas fa-envelope"></i>
             </a>
-            <button id="refreshBtn" class="refresh-btn" title="Rafraîchir">
+            <button id="refreshBtn" class="header-btn" title="Rafraîchir">
                 <i class="fas fa-sync-alt"></i>
+            </button>
+            <button id="logoutBtn" class="header-btn logout" title="Déconnexion">
+                <i class="fas fa-sign-out-alt"></i>
             </button>
         </div>
     </header>
@@ -86,9 +47,14 @@
         </button>
     </div>
 
-    <main id="tabContent" class="tab-content"></main>
+    <main id="tabContent" class="tab-content">
+        <div class="loader">
+            <div class="spinner"></div>
+            <p>Chargement des données...</p>
+        </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+    <script src="supervision.js"></script>
 </body>
 </html>

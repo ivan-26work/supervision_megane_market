@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Détail produit - Megane Market</title>
+    <title>Détail produit - Supervision</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="supervision.css">
     <style>
         .detail-container {
             max-width: 1000px;
@@ -18,9 +18,9 @@
             position: sticky;
             top: 16px;
             z-index: 200;
-            background: #0e1a26;
+            background: #ffffff;
             border-radius: 60px;
-            border: 1px solid var(--border);
+            border: 1px solid #5a9eff;
             height: 60px;
             margin: 0 0 20px 0;
             padding: 0 20px;
@@ -28,16 +28,16 @@
             align-items: center;
             justify-content: space-between;
             gap: 14px;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .back-btn {
-            background: #1a2a3a;
-            border: 1px solid var(--b2);
+            background: rgba(90, 158, 255, 0.1);
+            border: 1px solid #5a9eff;
             border-radius: 40px;
             padding: 8px 16px;
             cursor: pointer;
-            color: var(--text);
+            color: #5a9eff;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -49,7 +49,7 @@
         }
 
         .back-btn:hover {
-            background: var(--blue);
+            background: #5a9eff;
             color: white;
             transform: translateX(-4px);
         }
@@ -62,15 +62,16 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: #5a9eff;
         }
 
         .action-btn {
-            background: var(--s2);
-            border: 1px solid var(--b2);
+            background: rgba(255, 77, 77, 0.1);
+            border: 1px solid #ff4d4d;
             border-radius: 40px;
             padding: 8px 16px;
             cursor: pointer;
-            color: var(--text);
+            color: #ff4d4d;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -81,25 +82,23 @@
         }
 
         .action-btn.active {
-            border-color: var(--green);
-            color: var(--green);
-        }
-
-        .action-btn.inactive {
-            border-color: var(--red);
-            color: var(--red);
+            border-color: #4ade80;
+            color: #4ade80;
         }
 
         .action-btn:hover {
-            background: var(--blue);
+            background: #ff4d4d;
             color: white;
-            border-color: var(--blue);
+        }
+
+        .action-btn.active:hover {
+            background: #4ade80;
         }
 
         /* Carrousel */
         .carousel-container {
-            background: var(--s1);
-            border: 1px solid var(--border);
+            background: #fafbfc;
+            border: 1px solid #e8ecf0;
             border-radius: 24px;
             margin-bottom: 20px;
             overflow: hidden;
@@ -108,21 +107,20 @@
         .carousel-main {
             position: relative;
             aspect-ratio: 1 / 1;
-            background: var(--s2);
+            background: #fafbfc;
         }
 
         .carousel-main img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
         }
 
         .carousel-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             border: none;
             border-radius: 50%;
             width: 40px;
@@ -137,8 +135,8 @@
         }
 
         .carousel-nav:hover {
-            background: var(--blue);
-            transform: translateY(-50%) scale(1.1);
+            background: #5a9eff;
+            transform: translateY(-50%) scale(1.05);
         }
 
         .carousel-nav.prev { left: 16px; }
@@ -149,42 +147,59 @@
             justify-content: center;
             gap: 8px;
             padding: 12px;
-            background: var(--s1);
+            background: #fafbfc;
         }
 
         .dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--b2);
+            background: #d0d5dd;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .dot.active {
-            background: var(--blue);
+            background: #5a9eff;
             width: 24px;
             border-radius: 4px;
         }
 
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a9aaa;
+            font-size: 4rem;
+        }
+
+        /* Cartes */
         .info-card-detailed {
-            background: var(--s1);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid #e8ecf0;
+            border-radius: 24px;
             margin-bottom: 20px;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .info-card-detailed:hover {
+            border-color: #5a9eff;
+            box-shadow: 0 4px 12px rgba(90, 158, 255, 0.1);
         }
 
         .card-header {
             padding: 16px 20px;
-            background: var(--s2);
-            border-bottom: 1px solid var(--border);
+            background: #fafbfc;
+            border-bottom: 1px solid #e8ecf0;
         }
 
         .card-header h3 {
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--blue);
+            color: #5a9eff;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -208,7 +223,7 @@
 
         .info-item label {
             font-size: 0.7rem;
-            color: var(--muted);
+            color: #8a9aaa;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -218,12 +233,13 @@
             font-size: 0.9rem;
             font-weight: 500;
             word-break: break-word;
+            color: #1a2a3a;
         }
 
         .description-text {
             font-size: 0.9rem;
             line-height: 1.5;
-            color: var(--text);
+            color: #1a2a3a;
         }
 
         .stats-row {
@@ -233,22 +249,28 @@
         }
 
         .stat-item {
-            background: var(--s2);
-            border: 1px solid var(--border);
+            background: #fafbfc;
+            border: 1px solid #e8ecf0;
             border-radius: 16px;
             padding: 16px;
             text-align: center;
+            transition: all 0.2s;
+        }
+
+        .stat-item:hover {
+            border-color: #5a9eff;
+            transform: translateY(-2px);
         }
 
         .stat-item .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--blue);
+            color: #5a9eff;
         }
 
         .stat-item .stat-label {
             font-size: 0.7rem;
-            color: var(--muted);
+            color: #8a9aaa;
             margin-top: 4px;
         }
 
@@ -270,25 +292,75 @@
 
         .badge-featured {
             background: rgba(255, 170, 68, 0.15);
-            color: var(--orange);
-            border: 1px solid var(--orange);
+            color: #ffaa44;
+            border: 1px solid #ffaa44;
         }
 
         .badge-active {
             background: rgba(74, 222, 128, 0.15);
-            color: var(--green);
-            border: 1px solid var(--green);
+            color: #4ade80;
+            border: 1px solid #4ade80;
         }
 
         .badge-inactive {
             background: rgba(255, 77, 77, 0.15);
-            color: var(--red);
-            border: 1px solid var(--red);
+            color: #ff4d4d;
+            border: 1px solid #ff4d4d;
+        }
+
+        .seller-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #5a9eff;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .seller-link:hover {
+            text-decoration: underline;
+        }
+
+        .loader {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e8ecf0;
+            border-top-color: #5a9eff;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8a9aaa;
         }
 
         @media (max-width: 768px) {
-            .info-grid { grid-template-columns: 1fr; }
-            .stats-row { grid-template-columns: 1fr; }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+            .detail-header-bar {
+                margin: 12px 12px 0 12px;
+                padding: 0 15px;
+            }
+            .back-btn span {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -297,7 +369,7 @@
     <div class="detail-container">
         <div class="detail-header-bar">
             <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> Retour
+                <i class="fas fa-arrow-left"></i> <span>Retour</span>
             </a>
             <h3 id="pageTitle">Chargement...</h3>
             <button id="toggleActiveBtn" class="action-btn" style="display: none;">
@@ -313,6 +385,8 @@
         </div>
     </div>
 
+    <div id="toast" class="toast"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         (function() {
@@ -323,9 +397,18 @@
             const detailContent = document.getElementById('detailContent');
             const pageTitle = document.getElementById('pageTitle');
             const toggleActiveBtn = document.getElementById('toggleActiveBtn');
+            const toastEl = document.getElementById('toast');
 
             let currentProduct = null;
             let currentImages = [];
+            let carouselInterval = null;
+            let currentImageIndex = 0;
+
+            function showToast(message, type = 'info') {
+                toastEl.textContent = message;
+                toastEl.className = `toast ${type} show`;
+                setTimeout(() => toastEl.classList.remove('show'), 3000);
+            }
 
             function getProductId() {
                 const params = new URLSearchParams(window.location.search);
@@ -344,12 +427,59 @@
                         .eq('id', currentProduct.id);
                     
                     if (error) {
-                        alert('Erreur lors de la modification');
+                        showToast('Erreur lors de la modification', 'error');
                     } else {
-                        alert(`Produit ${action} avec succès`);
+                        showToast(`Produit ${action} avec succès`, 'success');
                         loadProduct();
                     }
                 }
+            }
+
+            function initCarousel() {
+                if (currentImages.length <= 1) return;
+
+                const mainImg = document.getElementById('mainImage');
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const dots = document.querySelectorAll('.dot');
+
+                if (!mainImg) return;
+
+                function goToSlide(index) {
+                    currentImageIndex = (index + currentImages.length) % currentImages.length;
+                    mainImg.src = currentImages[currentImageIndex];
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentImageIndex);
+                    });
+                }
+
+                function nextSlide() {
+                    goToSlide(currentImageIndex + 1);
+                    resetCarouselTimer();
+                }
+
+                function prevSlide() {
+                    goToSlide(currentImageIndex - 1);
+                    resetCarouselTimer();
+                }
+
+                function resetCarouselTimer() {
+                    if (carouselInterval) {
+                        clearInterval(carouselInterval);
+                        carouselInterval = setInterval(nextSlide, 3500);
+                    }
+                }
+
+                prevBtn.addEventListener('click', prevSlide);
+                nextBtn.addEventListener('click', nextSlide);
+                dots.forEach((dot, i) => {
+                    dot.addEventListener('click', () => {
+                        goToSlide(i);
+                        resetCarouselTimer();
+                    });
+                });
+
+                carouselInterval = setInterval(nextSlide, 3500);
             }
 
             async function loadProduct() {
@@ -370,26 +500,22 @@
                     currentProduct = product;
                     currentImages = (product.images || []).filter(Boolean);
 
-                    // Titre abrégé
                     pageTitle.textContent = product.name.substring(0, 30);
 
-                    // Bouton activer/désactiver
                     const isActive = product.active !== false;
                     toggleActiveBtn.style.display = 'flex';
                     toggleActiveBtn.innerHTML = isActive 
                         ? '<i class="fas fa-power-off"></i> Désactiver' 
                         : '<i class="fas fa-play"></i> Activer';
-                    toggleActiveBtn.className = `action-btn ${isActive ? 'active' : 'inactive'}`;
+                    toggleActiveBtn.className = `action-btn ${isActive ? 'active' : ''}`;
                     toggleActiveBtn.onclick = toggleProductStatus;
 
-                    // Charger le vendeur
                     const { data: seller } = await supabase
                         .from('markets')
-                        .select('market_name, owner_name, city')
+                        .select('id, market_name, owner_name, city')
                         .eq('id', product.user_id)
                         .single();
 
-                    // Charger les stats
                     const { data: stats } = await supabase
                         .from('product_stats')
                         .select('view_count, click_count')
@@ -402,7 +528,6 @@
                     }
                     const conversion = views ? ((clicks / views) * 100).toFixed(1) : 0;
 
-                    // Générer le carrousel
                     let carouselHtml = '';
                     if (currentImages.length > 0) {
                         carouselHtml = `
@@ -425,18 +550,131 @@
                         carouselHtml = `
                             <div class="carousel-container">
                                 <div class="carousel-main">
-                                    <div class="product-image-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--s2);">
-                                        <i class="fas fa-image" style="font-size:4rem;color:var(--b2);"></i>
-                                    </div>
+                                    <div class="image-placeholder"><i class="fas fa-image"></i></div>
                                 </div>
                             </div>
                         `;
                     }
 
+                    const priceOptionHtml = product.price_option ? `
+                        <div class="info-item">
+                            <label>Option prix</label>
+                            <div class="value">${escapeHtml(product.price_option)}</div>
+                        </div>
+                    ` : '';
+
+                    const brandHtml = product.brand ? `
+                        <div class="info-item">
+                            <label>Marque</label>
+                            <div class="value">${escapeHtml(product.brand)}</div>
+                        </div>
+                    ` : '';
+
+                    const conditionHtml = product.condition ? `
+                        <div class="info-item">
+                            <label>État</label>
+                            <div class="value">${escapeHtml(product.condition)}</div>
+                        </div>
+                    ` : '';
+
+                    const stockHtml = product.stock !== null && product.stock !== undefined ? `
+                        <div class="info-item">
+                            <label>Stock</label>
+                            <div class="value">${product.stock} unités</div>
+                        </div>
+                    ` : '';
+
+                    const skuHtml = product.sku ? `
+                        <div class="info-item">
+                            <label>Référence SKU</label>
+                            <div class="value">${escapeHtml(product.sku)}</div>
+                        </div>
+                    ` : '';
+
+                    const deliveryHtml = (product.delivery_price !== null && product.delivery_price !== undefined) ? `
+                        <div class="info-item">
+                            <label>Livraison</label>
+                            <div class="value">
+                                ${product.delivery_price === 0 ? 'Gratuite' : formatPrice(product.delivery_price) + ' FCFA'}
+                                ${product.delivery_time ? ` · ${escapeHtml(product.delivery_time)}` : ''}
+                            </div>
+                        </div>
+                    ` : '';
+
+                    const colorsHtml = product.colors ? `
+                        <div class="info-item">
+                            <label>Couleurs</label>
+                            <div class="value">${escapeHtml(product.colors)}</div>
+                        </div>
+                    ` : '';
+
+                    const sizesHtml = product.sizes ? `
+                        <div class="info-item">
+                            <label>Tailles</label>
+                            <div class="value">${escapeHtml(product.sizes)}</div>
+                        </div>
+                    ` : '';
+
+                    const weightHtml = product.weight ? `
+                        <div class="info-item">
+                            <label>Poids</label>
+                            <div class="value">${product.weight} kg</div>
+                        </div>
+                    ` : '';
+
+                    const originHtml = product.origin ? `
+                        <div class="info-item">
+                            <label>Origine</label>
+                            <div class="value">${escapeHtml(product.origin)}</div>
+                        </div>
+                    ` : '';
+
+                    const warrantyHtml = product.warranty ? `
+                        <div class="info-item">
+                            <label>Garantie</label>
+                            <div class="value">${escapeHtml(product.warranty)}</div>
+                        </div>
+                    ` : '';
+
+                    const returnHtml = product.return_policy ? `
+                        <div class="info-item">
+                            <label>Retour</label>
+                            <div class="value">${escapeHtml(product.return_policy)}</div>
+                        </div>
+                    ` : '';
+
+                    const categoryHtml = product.category ? `
+                        <div class="info-item">
+                            <label>Catégorie</label>
+                            <div class="value">${escapeHtml(product.category)}</div>
+                        </div>
+                    ` : '';
+
                     detailContent.innerHTML = `
                         ${carouselHtml}
 
-                        <!-- Carte Informations générales -->
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-line"></i> Statistiques</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="stats-row">
+                                    <div class="stat-item">
+                                        <div class="stat-value">${views}</div>
+                                        <div class="stat-label">whatsapp</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">${clicks}</div>
+                                        <div class="stat-label">toucher</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">${conversion}%</div>
+                                        <div class="stat-label">Conversion</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-info-circle"></i> Informations générales</h3>
@@ -451,60 +689,78 @@
                                         <label>Prix</label>
                                         <div class="value">${formatPrice(product.price)} FCFA</div>
                                     </div>
+                                    ${priceOptionHtml}
+                                    ${categoryHtml}
+                                    ${brandHtml}
+                                    ${conditionHtml}
+                                    ${stockHtml}
+                                    ${skuHtml}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-truck"></i> Livraison</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-grid">
+                                    ${deliveryHtml}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-palette"></i> Caractéristiques</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-grid">
+                                    ${colorsHtml}
+                                    ${sizesHtml}
+                                    ${weightHtml}
+                                    ${originHtml}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-shield-alt"></i> Garantie</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-grid">
+                                    ${warrantyHtml}
+                                    ${returnHtml}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-store"></i> Vendeur</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-grid">
                                     <div class="info-item">
-                                        <label>Option prix</label>
-                                        <div class="value">${escapeHtml(product.price_option || '-')}</div>
+                                        <label>Nom du marché</label>
+                                        <div class="value">${escapeHtml(seller?.market_name || '-')}</div>
                                     </div>
                                     <div class="info-item">
-                                        <label>Catégorie</label>
-                                        <div class="value">${escapeHtml(product.category || '-')}</div>
+                                        <label>Propriétaire</label>
+                                        <div class="value">${escapeHtml(seller?.owner_name || '-')}</div>
                                     </div>
                                     <div class="info-item">
-                                        <label>Vendeur</label>
-                                        <div class="value">${escapeHtml(seller?.market_name || seller?.owner_name || '-')}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <label>Ville du vendeur</label>
+                                        <label>Ville</label>
                                         <div class="value">${escapeHtml(seller?.city || '-')}</div>
                                     </div>
                                 </div>
+                                <a href="vendeur.html?id=${seller?.id}" class="seller-link">
+                                    <i class="fas fa-external-link-alt"></i> Voir le vendeur
+                                </a>
                             </div>
                         </div>
 
-                        <!-- Carte Description -->
-                        <div class="info-card-detailed">
-                            <div class="card-header">
-                                <h3><i class="fas fa-align-left"></i> Description</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="description-text">${escapeHtml(product.description || 'Aucune description')}</div>
-                            </div>
-                        </div>
-
-                        <!-- Carte Statistiques -->
-                        <div class="info-card-detailed">
-                            <div class="card-header">
-                                <h3><i class="fas fa-chart-line"></i> Statistiques</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="stats-row">
-                                    <div class="stat-item">
-                                        <div class="stat-value">${views}</div>
-                                        <div class="stat-label">Vues</div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-value">${clicks}</div>
-                                        <div class="stat-label">Commandes</div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-value">${conversion}%</div>
-                                        <div class="stat-label">Conversion</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Carte Statut -->
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-tag"></i> Statut</h3>
@@ -520,45 +776,25 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="info-card-detailed">
+                            <div class="card-header">
+                                <h3><i class="fas fa-align-left"></i> Description</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="description-text">${escapeHtml(product.description || 'Aucune description')}</div>
+                            </div>
+                        </div>
                     `;
 
-                    // Initialiser le carrousel
                     if (currentImages.length > 1) {
-                        let currentIndex = 0;
-                        const mainImg = document.getElementById('mainImage');
-                        const prevBtn = document.getElementById('prevBtn');
-                        const nextBtn = document.getElementById('nextBtn');
-                        const dots = document.querySelectorAll('.dot');
-
-                        function updateCarousel(index) {
-                            currentIndex = index;
-                            mainImg.src = currentImages[currentIndex];
-                            dots.forEach((dot, i) => {
-                                dot.classList.toggle('active', i === currentIndex);
-                            });
-                        }
-
-                        prevBtn.addEventListener('click', () => {
-                            const newIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-                            updateCarousel(newIndex);
-                        });
-
-                        nextBtn.addEventListener('click', () => {
-                            const newIndex = (currentIndex + 1) % currentImages.length;
-                            updateCarousel(newIndex);
-                        });
-
-                        dots.forEach(dot => {
-                            dot.addEventListener('click', () => {
-                                const index = parseInt(dot.getAttribute('data-index'));
-                                updateCarousel(index);
-                            });
-                        });
+                        initCarousel();
                     }
 
                 } catch (err) {
                     console.error(err);
                     detailContent.innerHTML = `<div class="empty-state">Erreur: ${err.message}</div>`;
+                    showToast('Erreur chargement', 'error');
                 }
             }
 

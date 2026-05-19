@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Détail vendeur - Megane Market</title>
+    <title>Détail vendeur - Supervision</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="supervision.css">
     <style>
         /* Styles spécifiques pour la page détail */
         .detail-container {
@@ -15,14 +15,13 @@
             padding: 20px;
         }
 
-        /* Header identique à index.html */
         .detail-header-bar {
             position: sticky;
             top: 16px;
             z-index: 200;
-            background: #0e1a26;
+            background: #ffffff;
             border-radius: 60px;
-            border: 1px solid var(--border);
+            border: 1px solid #5a9eff;
             height: 60px;
             margin: 0 0 20px 0;
             padding: 0 20px;
@@ -30,16 +29,16 @@
             align-items: center;
             justify-content: space-between;
             gap: 14px;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .back-btn {
-            background: #1a2a3a;
-            border: 1px solid var(--b2);
+            background: rgba(90, 158, 255, 0.1);
+            border: 1px solid #5a9eff;
             border-radius: 40px;
             padding: 8px 16px;
             cursor: pointer;
-            color: var(--text);
+            color: #5a9eff;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -51,7 +50,7 @@
         }
 
         .back-btn:hover {
-            background: var(--blue);
+            background: #5a9eff;
             color: white;
             transform: translateX(-4px);
         }
@@ -64,15 +63,16 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: #5a9eff;
         }
 
         .disable-btn {
-            background: var(--s2);
-            border: 1px solid var(--red);
+            background: rgba(255, 77, 77, 0.1);
+            border: 1px solid #ff4d4d;
             border-radius: 40px;
             padding: 8px 16px;
             cursor: pointer;
-            color: var(--red);
+            color: #ff4d4d;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -83,29 +83,35 @@
         }
 
         .disable-btn:hover {
-            background: var(--red);
+            background: #ff4d4d;
             color: white;
         }
 
         /* Cartes */
         .info-card-detailed {
-            background: var(--s1);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid #e8ecf0;
+            border-radius: 24px;
             margin-bottom: 20px;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .info-card-detailed:hover {
+            border-color: #5a9eff;
+            box-shadow: 0 4px 12px rgba(90, 158, 255, 0.1);
         }
 
         .card-header {
             padding: 16px 20px;
-            background: var(--s2);
-            border-bottom: 1px solid var(--border);
+            background: #fafbfc;
+            border-bottom: 1px solid #e8ecf0;
         }
 
         .card-header h3 {
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--blue);
+            color: #5a9eff;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -128,29 +134,30 @@
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--blue);
+            border: 3px solid #5a9eff;
         }
 
         .profile-avatar-placeholder {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: var(--s2);
-            border: 3px solid var(--blue);
+            background: #fafbfc;
+            border: 3px solid #5a9eff;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: var(--blue);
+            color: #5a9eff;
         }
 
         .profile-info h2 {
             font-size: 1.2rem;
             margin-bottom: 4px;
+            color: #1a2a3a;
         }
 
         .profile-info p {
-            color: var(--muted);
+            color: #8a9aaa;
             font-size: 0.85rem;
         }
 
@@ -166,22 +173,28 @@
         }
 
         .stat-card-detailed {
-            background: var(--s2);
-            border: 1px solid var(--border);
+            background: #fafbfc;
+            border: 1px solid #e8ecf0;
             border-radius: 16px;
             padding: 16px;
             text-align: center;
+            transition: all 0.2s;
+        }
+
+        .stat-card-detailed:hover {
+            border-color: #5a9eff;
+            transform: translateY(-2px);
         }
 
         .stat-card-detailed .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--blue);
+            color: #5a9eff;
         }
 
         .stat-card-detailed .stat-label {
             font-size: 0.7rem;
-            color: var(--muted);
+            color: #8a9aaa;
             margin-top: 4px;
         }
 
@@ -200,7 +213,7 @@
 
         .info-item label {
             font-size: 0.7rem;
-            color: var(--muted);
+            color: #8a9aaa;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -210,13 +223,14 @@
             font-size: 0.9rem;
             font-weight: 500;
             word-break: break-word;
+            color: #1a2a3a;
         }
 
         /* Description */
         .description-text {
             font-size: 0.9rem;
             line-height: 1.5;
-            color: var(--text);
+            color: #1a2a3a;
         }
 
         /* Liste produits */
@@ -231,16 +245,17 @@
             align-items: center;
             gap: 16px;
             padding: 12px 16px;
-            background: var(--s2);
-            border: 1px solid var(--border);
+            background: #fafbfc;
+            border: 1px solid #e8ecf0;
             border-radius: 16px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .product-item-detailed:hover {
-            border-color: var(--blue);
+            border-color: #5a9eff;
             transform: translateX(6px);
+            background: #ffffff;
         }
 
         .product-img {
@@ -248,18 +263,17 @@
             height: 50px;
             border-radius: 12px;
             object-fit: cover;
-            background: var(--s1);
         }
 
         .product-img-placeholder {
             width: 50px;
             height: 50px;
             border-radius: 12px;
-            background: var(--s1);
+            background: #e8ecf0;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--muted);
+            color: #8a9aaa;
             font-size: 1.2rem;
         }
 
@@ -271,21 +285,65 @@
             font-weight: 700;
             font-size: 0.9rem;
             margin-bottom: 4px;
+            color: #1a2a3a;
         }
 
         .product-price-detailed {
             font-size: 0.75rem;
-            color: var(--blue);
+            color: #5a9eff;
         }
 
         .product-arrow {
-            color: var(--muted);
+            color: #8a9aaa;
+        }
+
+        /* Loader */
+        .loader {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e8ecf0;
+            border-top-color: #5a9eff;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .empty-state {
             text-align: center;
             padding: 40px;
-            color: var(--muted);
+            color: #8a9aaa;
+        }
+
+        /* Badge statut */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .status-active {
+            background: rgba(74, 222, 128, 0.12);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .status-inactive {
+            background: rgba(255, 77, 77, 0.12);
+            color: #ff4d4d;
+            border: 1px solid rgba(255, 77, 77, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -302,16 +360,22 @@
             .profile-status {
                 margin-left: 0;
             }
+            .detail-header-bar {
+                margin: 12px 12px 0 12px;
+                padding: 0 15px;
+            }
+            .back-btn span {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="detail-container">
-        <!-- Header identique à index.html -->
         <div class="detail-header-bar">
             <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> Retour
+                <i class="fas fa-arrow-left"></i> <span>Retour</span>
             </a>
             <h3 id="pageTitle">Chargement...</h3>
             <button id="disableMarketBtn" class="disable-btn" style="display: none;">
@@ -327,6 +391,8 @@
         </div>
     </div>
 
+    <div id="toast" class="toast"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         (function() {
@@ -337,8 +403,15 @@
             const detailContent = document.getElementById('detailContent');
             const pageTitle = document.getElementById('pageTitle');
             const disableBtn = document.getElementById('disableMarketBtn');
+            const toastEl = document.getElementById('toast');
 
             let currentVendeur = null;
+
+            function showToast(message, type = 'info') {
+                toastEl.textContent = message;
+                toastEl.className = `toast ${type} show`;
+                setTimeout(() => toastEl.classList.remove('show'), 3000);
+            }
 
             function getVendeurId() {
                 const params = new URLSearchParams(window.location.search);
@@ -357,9 +430,9 @@
                         .eq('id', currentVendeur.id);
                     
                     if (error) {
-                        alert('Erreur lors de la modification');
+                        showToast('Erreur lors de la modification', 'error');
                     } else {
-                        alert(`Marché ${action} avec succès`);
+                        showToast(`Marché ${action} avec succès`, 'success');
                         loadVendeur();
                     }
                 }
@@ -382,25 +455,24 @@
                     if (error || !vendeur) throw new Error('Vendeur non trouvé');
                     currentVendeur = vendeur;
 
-                    // Titre abrégé
                     const shortName = vendeur.market_name ? vendeur.market_name.substring(0, 25) : 'Vendeur';
                     pageTitle.textContent = shortName;
+                    
                     disableBtn.style.display = 'flex';
                     disableBtn.onclick = toggleMarketStatus;
-                    disableBtn.innerHTML = vendeur.market_active !== false ? 
+                    const isActive = vendeur.market_active !== false;
+                    disableBtn.innerHTML = isActive ? 
                         '<i class="fas fa-power-off"></i> Désactiver' : 
                         '<i class="fas fa-play"></i> Activer';
-                    disableBtn.style.borderColor = vendeur.market_active !== false ? 'var(--red)' : 'var(--green)';
-                    disableBtn.style.color = vendeur.market_active !== false ? 'var(--red)' : 'var(--green)';
+                    disableBtn.style.borderColor = isActive ? '#ff4d4d' : '#4ade80';
+                    disableBtn.style.color = isActive ? '#ff4d4d' : '#4ade80';
 
-                    // Charger produits
                     const { data: produits } = await supabase
                         .from('products')
                         .select('*')
                         .eq('user_id', id)
                         .order('created_at', { ascending: false });
 
-                    // Charger stats
                     const productIds = produits?.map(p => p.id) || [];
                     let productStats = {};
                     if (productIds.length > 0) {
@@ -418,7 +490,7 @@
                     const totalViews = produits?.reduce((sum, p) => sum + (productStats[p.id]?.views || 0), 0) || 0;
                     const totalClicks = produits?.reduce((sum, p) => sum + (productStats[p.id]?.clicks || 0), 0) || 0;
                     const conversion = totalViews ? ((totalClicks / totalViews) * 100).toFixed(1) : 0;
-                    const isActive = vendeur.market_active !== false;
+                    
                     const avatarUrl = vendeur.avatar_url;
 
                     let produitsHtml = '';
@@ -444,7 +516,6 @@
                     }
 
                     detailContent.innerHTML = `
-                        <!-- Carte Profil -->
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-user-circle"></i> Profil</h3>
@@ -466,7 +537,6 @@
                             </div>
                         </div>
 
-                        <!-- Carte Statistiques -->
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-chart-line"></i> Statistiques</h3>
@@ -483,7 +553,7 @@
                                     </div>
                                     <div class="stat-card-detailed">
                                         <div class="stat-value">${totalClicks}</div>
-                                        <div class="stat-label">Commandes</div>
+                                        <div class="stat-label">toucher</div>
                                     </div>
                                     <div class="stat-card-detailed">
                                         <div class="stat-value">${conversion}%</div>
@@ -493,7 +563,6 @@
                             </div>
                         </div>
 
-                        <!-- Carte Informations -->
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-info-circle"></i> Informations</h3>
@@ -528,7 +597,6 @@
                             </div>
                         </div>
 
-                        <!-- Carte Description -->
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-align-left"></i> Description</h3>
@@ -538,7 +606,6 @@
                             </div>
                         </div>
 
-                        <!-- Carte Produits -->
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-boxes"></i> Produits (${produits?.length || 0})</h3>

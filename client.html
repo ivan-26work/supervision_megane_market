@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Détail client - Megane Market</title>
+    <title>Détail client - Supervision</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="supervision.css">
     <style>
         .detail-container {
             max-width: 1000px;
@@ -18,9 +18,9 @@
             position: sticky;
             top: 16px;
             z-index: 200;
-            background: #0e1a26;
+            background: #ffffff;
             border-radius: 60px;
-            border: 1px solid var(--border);
+            border: 1px solid #5a9eff;
             height: 60px;
             margin: 0 0 20px 0;
             padding: 0 20px;
@@ -28,16 +28,16 @@
             align-items: center;
             justify-content: space-between;
             gap: 14px;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .back-btn {
-            background: #1a2a3a;
-            border: 1px solid var(--b2);
+            background: rgba(90, 158, 255, 0.1);
+            border: 1px solid #5a9eff;
             border-radius: 40px;
             padding: 8px 16px;
             cursor: pointer;
-            color: var(--text);
+            color: #5a9eff;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -49,7 +49,7 @@
         }
 
         .back-btn:hover {
-            background: var(--blue);
+            background: #5a9eff;
             color: white;
             transform: translateX(-4px);
         }
@@ -62,26 +62,33 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: #5a9eff;
         }
 
         .info-card-detailed {
-            background: var(--s1);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid #e8ecf0;
+            border-radius: 24px;
             margin-bottom: 20px;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .info-card-detailed:hover {
+            border-color: #5a9eff;
+            box-shadow: 0 4px 12px rgba(90, 158, 255, 0.1);
         }
 
         .card-header {
             padding: 16px 20px;
-            background: var(--s2);
-            border-bottom: 1px solid var(--border);
+            background: #fafbfc;
+            border-bottom: 1px solid #e8ecf0;
         }
 
         .card-header h3 {
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--blue);
+            color: #5a9eff;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -103,29 +110,30 @@
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--blue);
+            border: 3px solid #5a9eff;
         }
 
         .profile-avatar-placeholder {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: var(--s2);
-            border: 3px solid var(--blue);
+            background: #fafbfc;
+            border: 3px solid #5a9eff;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: var(--blue);
+            color: #5a9eff;
         }
 
         .profile-info h2 {
             font-size: 1.2rem;
             margin-bottom: 4px;
+            color: #1a2a3a;
         }
 
         .profile-info p {
-            color: var(--muted);
+            color: #8a9aaa;
             font-size: 0.85rem;
         }
 
@@ -147,7 +155,7 @@
 
         .info-item label {
             font-size: 0.7rem;
-            color: var(--muted);
+            color: #8a9aaa;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -157,6 +165,7 @@
             font-size: 0.9rem;
             font-weight: 500;
             word-break: break-word;
+            color: #1a2a3a;
         }
 
         .orders-list {
@@ -170,14 +179,15 @@
             align-items: center;
             gap: 16px;
             padding: 12px 16px;
-            background: var(--s2);
-            border: 1px solid var(--border);
+            background: #fafbfc;
+            border: 1px solid #e8ecf0;
             border-radius: 16px;
             transition: all 0.2s;
         }
 
         .order-item:hover {
-            border-color: var(--blue);
+            border-color: #5a9eff;
+            background: #ffffff;
         }
 
         .order-img {
@@ -185,18 +195,17 @@
             height: 50px;
             border-radius: 12px;
             object-fit: cover;
-            background: var(--s1);
         }
 
         .order-img-placeholder {
             width: 50px;
             height: 50px;
             border-radius: 12px;
-            background: var(--s1);
+            background: #e8ecf0;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--muted);
+            color: #8a9aaa;
             font-size: 1.2rem;
         }
 
@@ -208,30 +217,88 @@
             font-weight: 700;
             font-size: 0.85rem;
             margin-bottom: 4px;
+            color: #1a2a3a;
         }
 
         .order-date {
             font-size: 0.7rem;
-            color: var(--muted);
+            color: #8a9aaa;
         }
 
         .order-amount {
             font-weight: 700;
-            color: var(--blue);
+            color: #5a9eff;
             font-size: 0.85rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .status-complet {
+            background: rgba(74, 222, 128, 0.12);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .status-incomplet {
+            background: rgba(255, 170, 68, 0.12);
+            color: #ffaa44;
+            border: 1px solid rgba(255, 170, 68, 0.3);
+        }
+
+        .loader {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e8ecf0;
+            border-top-color: #5a9eff;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .empty-state {
             text-align: center;
             padding: 40px;
-            color: var(--muted);
+            color: #8a9aaa;
         }
 
         @media (max-width: 768px) {
-            .info-grid { grid-template-columns: 1fr; }
-            .profile-row { flex-direction: column; text-align: center; }
-            .profile-status { margin-left: 0; }
-            .order-item { flex-wrap: wrap; }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-row {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-status {
+                margin-left: 0;
+            }
+            .detail-header-bar {
+                margin: 12px 12px 0 12px;
+                padding: 0 15px;
+            }
+            .back-btn span {
+                display: none;
+            }
+            .order-item {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
@@ -240,7 +307,7 @@
     <div class="detail-container">
         <div class="detail-header-bar">
             <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> Retour
+                <i class="fas fa-arrow-left"></i> <span>Retour</span>
             </a>
             <h3 id="pageTitle">Chargement...</h3>
             <div style="width: 80px;"></div>
@@ -254,6 +321,8 @@
         </div>
     </div>
 
+    <div id="toast" class="toast"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         (function() {
@@ -263,10 +332,28 @@
             const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             const detailContent = document.getElementById('detailContent');
             const pageTitle = document.getElementById('pageTitle');
+            const toastEl = document.getElementById('toast');
+
+            function showToast(message, type = 'info') {
+                toastEl.textContent = message;
+                toastEl.className = `toast ${type} show`;
+                setTimeout(() => toastEl.classList.remove('show'), 3000);
+            }
 
             function getClientId() {
                 const params = new URLSearchParams(window.location.search);
                 return params.get('id');
+            }
+
+            function formatPrice(price) {
+                return new Intl.NumberFormat('fr-FR').format(price);
+            }
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
             }
 
             async function loadClient() {
@@ -277,7 +364,6 @@
                 }
 
                 try {
-                    // 1. Charger le client
                     const { data: client, error } = await supabase
                         .from('buyers')
                         .select('*')
@@ -286,14 +372,12 @@
 
                     if (error || !client) throw new Error('Client non trouvé');
 
-                    // Titre abrégé
                     const shortName = client.full_name ? client.full_name.substring(0, 25) : 'Client';
                     pageTitle.textContent = shortName;
 
                     const isComplete = client.full_name && client.city;
                     const avatarUrl = client.avatar_url;
 
-                    // 2. Charger les commandes du client
                     const { data: orders, error: ordersError } = await supabase
                         .from('orders')
                         .select('*')
@@ -304,7 +388,6 @@
                         console.error('Erreur chargement commandes:', ordersError);
                     }
 
-                    // Générer le HTML des commandes
                     let ordersHtml = '';
                     if (orders && orders.length > 0) {
                         ordersHtml = orders.map(order => `
@@ -315,7 +398,7 @@
                                 }
                                 <div class="order-info">
                                     <div class="order-product">${escapeHtml(order.product_name)}</div>
-                                    <div class="order-date">${new Date(order.created_at).toLocaleDateString()}</div>
+                                    <div class="order-date">${new Date(order.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
                                 </div>
                                 <div class="order-amount">${formatPrice(order.product_price)} FCFA</div>
                             </div>
@@ -325,7 +408,6 @@
                     }
 
                     detailContent.innerHTML = `
-                        <!-- Carte Profil -->
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-user-circle"></i> Profil</h3>
@@ -347,7 +429,6 @@
                             </div>
                         </div>
 
-                        <!-- Carte Informations -->
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-info-circle"></i> Informations</h3>
@@ -376,13 +457,12 @@
                                     </div>
                                     <div class="info-item">
                                         <label>Membre depuis</label>
-                                        <div class="value">${client.created_at ? new Date(client.created_at).toLocaleDateString() : '-'}</div>
+                                        <div class="value">${client.created_at ? new Date(client.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-'}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Carte Commandes -->
                         <div class="info-card-detailed">
                             <div class="card-header">
                                 <h3><i class="fas fa-shopping-cart"></i> Historique des commandes (${orders?.length || 0})</h3>
@@ -398,18 +478,8 @@
                 } catch (err) {
                     console.error(err);
                     detailContent.innerHTML = `<div class="empty-state">Erreur: ${err.message}</div>`;
+                    showToast('Erreur chargement', 'error');
                 }
-            }
-
-            function formatPrice(price) {
-                return new Intl.NumberFormat('fr-FR').format(price);
-            }
-
-            function escapeHtml(text) {
-                if (!text) return '';
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
             }
 
             loadClient();
