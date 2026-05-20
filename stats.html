@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Statistiques - Supervision</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f0f2f5;
+            color: #1a2a3a;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        .main-header {
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            background: #ffffff;
+            border-radius: 60px;
+            height: 60px;
+            border: 1px solid #5a9eff;
+            margin: 16px 16px 0 16px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .back-btn {
+            background: rgba(90, 158, 255, 0.1);
+            border: 1px solid #5a9eff;
+            border-radius: 40px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #5a9eff;
+            text-decoration: none;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .back-btn:hover {
+            background: #5a9eff;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .page-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-align: center;
+            flex: 1;
+            color: #5a9eff;
+        }
+
+        .refresh-btn {
+            background: rgba(90, 158, 255, 0.1);
+            border: 1px solid #5a9eff;
+            border-radius: 40px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #5a9eff;
+            transition: all 0.2s;
+        }
+
+        .refresh-btn:hover {
+            background: #5a9eff;
+            color: white;
+            transform: rotate(180deg);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .period-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .period-btn {
+            background: #ffffff;
+            border: 1px solid #e8ecf0;
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #8a9aaa;
+        }
+
+        .period-btn.active {
+            background: #5a9eff;
+            border-color: #5a9eff;
+            color: white;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: #ffffff;
+            border: 1px solid #e8ecf0;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .kpi-card:hover {
+            border-color: #5a9eff;
+            transform: translateY(-2px);
+        }
+
+        .kpi-icon {
+            font-size: 2rem;
+            color: #5a9eff;
+            margin-bottom: 12px;
+        }
+
+        .kpi-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .kpi-label {
+            font-size: 0.75rem;
+            color: #8a9aaa;
+            margin-top: 4px;
+        }
+
+        .ranking-card {
+            background: #ffffff;
+            border: 1px solid #e8ecf0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .ranking-card h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #5a9eff;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #fafbfc;
+            border-radius: 12px;
+        }
+
+        .rank-number {
+            width: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #5a9eff;
+        }
+
+        .rank-info {
+            flex: 1;
+        }
+
+        .rank-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .rank-stats {
+            font-size: 0.7rem;
+            color: #8a9aaa;
+            margin-top: 2px;
+        }
+
+        .rank-value {
+            font-weight: 700;
+            color: #5a9eff;
+            font-size: 0.85rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8a9aaa;
+        }
+
+        .loader {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e8ecf0;
+            border-top-color: #5a9eff;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 900px) {
+            .kpi-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-header {
+                margin: 12px 12px 0 12px;
+                padding: 0 15px;
+            }
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .kpi-value {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="page-title">Statistiques globales</div>
+        <button id="refreshBtn" class="refresh-btn">
+            <i class="fas fa-sync-alt"></i>
+        </button>
+    </header>
+
+    <main class="main-content" id="mainContent">
+        <div class="loader">
+            <div class="spinner"></div>
+            <p>Chargement des statistiques...</p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (function() {
+            const SUPABASE_URL = 'https://emcsigvlopntwbfkkjkh.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtY3NpZ3Zsb3BudHdiZmtramtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4ODE5MTgsImV4cCI6MjA5NDQ1NzkxOH0.YwYoV-azL3WEFtHoh4yoF7xTLrOwZILKCzJrGPsCs6I';
+
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const mainContent = document.getElementById('mainContent');
+
+            let allProducts = [];
+            let allMarkets = [];
+            let allStats = [];
+            let currentPeriod = 30;
+            let charts = {};
+
+            async function loadData() {
+                try {
+                    const [productsRes, marketsRes, statsRes] = await Promise.all([
+                        supabase.from('products').select('*'),
+                        supabase.from('markets').select('id, market_name, owner_name'),
+                        supabase.from('product_stats').select('*')
+                    ]);
+
+                    allProducts = productsRes.data || [];
+                    allMarkets = marketsRes.data || [];
+                    allStats = statsRes.data || [];
+
+                    renderStats();
+
+                } catch (err) {
+                    console.error('Erreur:', err);
+                    mainContent.innerHTML = '<div class="empty-state">Erreur chargement des statistiques</div>';
+                }
+            }
+
+            // Filtre par période (jours)
+            function filterStatsByPeriod(stats, days) {
+                const cutoffDate = new Date();
+                cutoffDate.setDate(cutoffDate.getDate() - days);
+                
+                return stats.filter(stat => {
+                    const statDate = stat.viewed_at || stat.clicked_at;
+                    if (!statDate) return false;
+                    return new Date(statDate) >= cutoffDate;
+                });
+            }
+
+            function getFilteredStats() {
+                return filterStatsByPeriod(allStats, currentPeriod);
+            }
+
+            // Calcul des KPIs
+            function getTotalProducts() {
+                return allProducts.length;
+            }
+
+            function getTotalViews() {
+                const filtered = getFilteredStats();
+                return filtered.reduce((sum, stat) => sum + (stat.view_count || 0), 0);
+            }
+
+            function getTotalTouches() {
+                const filtered = getFilteredStats();
+                return filtered.reduce((sum, stat) => {
+                    if (stat.click_type === 'touch') return sum + (stat.click_count || 0);
+                    return sum;
+                }, 0);
+            }
+
+            function getTotalCardClicks() {
+                const filtered = getFilteredStats();
+                return filtered.reduce((sum, stat) => {
+                    if (stat.click_type === 'card') return sum + (stat.click_count || 0);
+                    return sum;
+                }, 0);
+            }
+
+            function getTotalWhatsAppClicks() {
+                const filtered = getFilteredStats();
+                return filtered.reduce((sum, stat) => {
+                    if (stat.click_type === 'whatsapp') return sum + (stat.click_count || 0);
+                    return sum;
+                }, 0);
+            }
+
+            // Top produits par type
+            function getTopProductsByMetric(metric, limit = 5) {
+                const productStats = {};
+                
+                allProducts.forEach(product => {
+                    productStats[product.id] = { name: product.name, price: product.price, value: 0 };
+                });
+                
+                const filtered = getFilteredStats();
+                
+                filtered.forEach(stat => {
+                    if (productStats[stat.product_id]) {
+                        if (metric === 'views') {
+                            productStats[stat.product_id].value += stat.view_count || 0;
+                        } else if (metric === 'touches' && stat.click_type === 'touch') {
+                            productStats[stat.product_id].value += stat.click_count || 0;
+                        } else if (metric === 'card_clicks' && stat.click_type === 'card') {
+                            productStats[stat.product_id].value += stat.click_count || 0;
+                        } else if (metric === 'whatsapp_clicks' && stat.click_type === 'whatsapp') {
+                            productStats[stat.product_id].value += stat.click_count || 0;
+                        }
+                    }
+                });
+                
+                return Object.values(productStats)
+                    .filter(p => p.value > 0)
+                    .sort((a, b) => b.value - a.value)
+                    .slice(0, limit);
+            }
+
+            function getZeroInteractionProducts() {
+                const productViews = {};
+                const productClicks = {};
+                
+                allProducts.forEach(product => {
+                    productViews[product.id] = 0;
+                    productClicks[product.id] = 0;
+                });
+                
+                const filtered = getFilteredStats();
+                
+                filtered.forEach(stat => {
+                    if (productViews[stat.product_id] !== undefined) {
+                        productViews[stat.product_id] += stat.view_count || 0;
+                        if (stat.click_count) {
+                            productClicks[stat.product_id] += stat.click_count || 0;
+                        }
+                    }
+                });
+                
+                return allProducts.filter(product => {
+                    return productViews[product.id] === 0 && productClicks[product.id] === 0;
+                }).slice(0, 5);
+            }
+
+            function formatPrice(price) {
+                return new Intl.NumberFormat('fr-FR').format(price);
+            }
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function renderStats() {
+                const totalProducts = getTotalProducts();
+                const totalViews = getTotalViews();
+                const totalTouches = getTotalTouches();
+                const totalCardClicks = getTotalCardClicks();
+                const totalWhatsAppClicks = getTotalWhatsAppClicks();
+                
+                const topByViews = getTopProductsByMetric('views', 5);
+                const topByTouches = getTopProductsByMetric('touches', 5);
+                const topByCardClicks = getTopProductsByMetric('card_clicks', 5);
+                const topByWhatsApp = getTopProductsByMetric('whatsapp_clicks', 5);
+                const zeroInteraction = getZeroInteractionProducts();
+
+                mainContent.innerHTML = `
+                    <div class="period-bar">
+                        <button class="period-btn ${currentPeriod === 7 ? 'active' : ''}" data-period="7">7 jours</button>
+                        <button class="period-btn ${currentPeriod === 30 ? 'active' : ''}" data-period="30">30 jours</button>
+                        <button class="period-btn ${currentPeriod === 90 ? 'active' : ''}" data-period="90">90 jours</button>
+                    </div>
+
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="fas fa-boxes"></i></div>
+                            <div class="kpi-value">${totalProducts}</div>
+                            <div class="kpi-label">Total produits</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="fas fa-eye"></i></div>
+                            <div class="kpi-value">${totalViews}</div>
+                            <div class="kpi-label">Vues</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="fas fa-hand-peace"></i></div>
+                            <div class="kpi-value">${totalTouches}</div>
+                            <div class="kpi-label">Touchers</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="fas fa-mouse-pointer"></i></div>
+                            <div class="kpi-value">${totalCardClicks}</div>
+                            <div class="kpi-label">Clics carte</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="fab fa-whatsapp"></i></div>
+                            <div class="kpi-value">${totalWhatsAppClicks}</div>
+                            <div class="kpi-label">WhatsApp</div>
+                        </div>
+                    </div>
+
+                    <div class="ranking-card">
+                        <h3><i class="fas fa-eye"></i> Top produits (vues)</h3>
+                        <div class="ranking-list">
+                            ${topByViews.map((p, idx) => `
+                                <div class="ranking-item">
+                                    <div class="rank-number">${idx + 1}</div>
+                                    <div class="rank-info">
+                                        <div class="rank-name">${escapeHtml(p.name)}</div>
+                                        <div class="rank-stats">${formatPrice(p.price)} FCFA</div>
+                                    </div>
+                                    <div class="rank-value">${p.value} vues</div>
+                                </div>
+                            `).join('')}
+                            ${topByViews.length === 0 ? '<div class="empty-state">Aucune donnée</div>' : ''}
+                        </div>
+                    </div>
+
+                    <div class="ranking-card">
+                        <h3><i class="fas fa-hand-peace"></i> Top produits (touchers)</h3>
+                        <div class="ranking-list">
+                            ${topByTouches.map((p, idx) => `
+                                <div class="ranking-item">
+                                    <div class="rank-number">${idx + 1}</div>
+                                    <div class="rank-info">
+                                        <div class="rank-name">${escapeHtml(p.name)}</div>
+                                        <div class="rank-stats">${formatPrice(p.price)} FCFA</div>
+                                    </div>
+                                    <div class="rank-value">${p.value} touches</div>
+                                </div>
+                            `).join('')}
+                            ${topByTouches.length === 0 ? '<div class="empty-state">Aucune donnée</div>' : ''}
+                        </div>
+                    </div>
+
+                    <div class="ranking-card">
+                        <h3><i class="fas fa-mouse-pointer"></i> Top produits (clics carte)</h3>
+                        <div class="ranking-list">
+                            ${topByCardClicks.map((p, idx) => `
+                                <div class="ranking-item">
+                                    <div class="rank-number">${idx + 1}</div>
+                                    <div class="rank-info">
+                                        <div class="rank-name">${escapeHtml(p.name)}</div>
+                                        <div class="rank-stats">${formatPrice(p.price)} FCFA</div>
+                                    </div>
+                                    <div class="rank-value">${p.value} clics</div>
+                                </div>
+                            `).join('')}
+                            ${topByCardClicks.length === 0 ? '<div class="empty-state">Aucune donnée</div>' : ''}
+                        </div>
+                    </div>
+
+                    <div class="ranking-card">
+                        <h3><i class="fab fa-whatsapp"></i> Top produits (WhatsApp)</h3>
+                        <div class="ranking-list">
+                            ${topByWhatsApp.map((p, idx) => `
+                                <div class="ranking-item">
+                                    <div class="rank-number">${idx + 1}</div>
+                                    <div class="rank-info">
+                                        <div class="rank-name">${escapeHtml(p.name)}</div>
+                                        <div class="rank-stats">${formatPrice(p.price)} FCFA</div>
+                                    </div>
+                                    <div class="rank-value">${p.value} contacts</div>
+                                </div>
+                            `).join('')}
+                            ${topByWhatsApp.length === 0 ? '<div class="empty-state">Aucune donnée</div>' : ''}
+                        </div>
+                    </div>
+
+                    <div class="ranking-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Produits sans interaction</h3>
+                        ${zeroInteraction.length > 0 ? `
+                            <div class="ranking-list">
+                                ${zeroInteraction.map(p => `
+                                    <div class="ranking-item">
+                                        <div class="rank-number"><i class="fas fa-eye-slash"></i></div>
+                                        <div class="rank-info">
+                                            <div class="rank-name">${escapeHtml(p.name)}</div>
+                                            <div class="rank-stats">${formatPrice(p.price)} FCFA</div>
+                                        </div>
+                                        <div class="rank-value">0 interaction</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : '<div class="empty-state">Tous vos produits ont des interactions !</div>'}
+                    </div>
+                `;
+
+                document.querySelectorAll('.period-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        currentPeriod = parseInt(btn.dataset.period);
+                        renderStats();
+                    });
+                });
+
+                const refreshBtn = document.getElementById('refreshBtn');
+                if (refreshBtn) {
+                    refreshBtn.addEventListener('click', () => {
+                        refreshBtn.style.transform = 'rotate(180deg)';
+                        setTimeout(() => { refreshBtn.style.transform = ''; }, 500);
+                        loadData();
+                    });
+                }
+            }
+
+            async function init() {
+                await loadData();
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>

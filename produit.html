@@ -95,7 +95,6 @@
             background: #4ade80;
         }
 
-        /* Carrousel */
         .carousel-container {
             background: #fafbfc;
             border: 1px solid #e8ecf0;
@@ -175,7 +174,6 @@
             font-size: 4rem;
         }
 
-        /* Cartes */
         .info-card-detailed {
             background: #ffffff;
             border: 1px solid #e8ecf0;
@@ -244,7 +242,7 @@
 
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
         }
 
@@ -352,7 +350,7 @@
                 grid-template-columns: 1fr;
             }
             .stats-row {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
             .detail-header-bar {
                 margin: 12px 12px 0 12px;
@@ -516,17 +514,31 @@
                         .eq('id', product.user_id)
                         .single();
 
-                    const { data: stats } = await supabase
+                    // Statistiques détaillées
+                    const { data: allStats } = await supabase
                         .from('product_stats')
-                        .select('view_count, click_count')
+                        .select('*')
                         .eq('product_id', id);
                     
-                    let views = 0, clicks = 0;
-                    for (const s of stats || []) {
-                        views += s.view_count || 0;
-                        clicks += s.click_count || 0;
+                    let views = 0;
+                    let touches = 0;
+                    let cardClicks = 0;
+                    let whatsappClicks = 0;
+                    
+                    for (const stat of allStats || []) {
+                        views += stat.view_count || 0;
+                        if (stat.click_type === 'touch') {
+                            touches += stat.click_count || 0;
+                        } else if (stat.click_type === 'card') {
+                            cardClicks += stat.click_count || 0;
+                        } else if (stat.click_type === 'whatsapp') {
+                            whatsappClicks += stat.click_count || 0;
+                        } else if (stat.click_count && !stat.click_type) {
+                            cardClicks += stat.click_count || 0;
+                        }
                     }
-                    const conversion = views ? ((clicks / views) * 100).toFixed(1) : 0;
+                    
+                    const conversion = views > 0 ? ((whatsappClicks / views) * 100).toFixed(1) : 0;
 
                     let carouselHtml = '';
                     if (currentImages.length > 0) {
@@ -591,11 +603,12 @@
                         </div>
                     ` : '';
 
-                    const deliveryHtml = (product.delivery_price !== null && product.delivery_price !== undefined) ? `
+                    const deliveryPrice = product.delivery_price;
+                    const deliveryHtml = (deliveryPrice !== null && deliveryPrice !== undefined) ? `
                         <div class="info-item">
                             <label>Livraison</label>
                             <div class="value">
-                                ${product.delivery_price === 0 ? 'Gratuite' : formatPrice(product.delivery_price) + ' FCFA'}
+                                ${deliveryPrice === 0 ? 'Gratuite' : formatPrice(deliveryPrice) + ' FCFA'}
                                 ${product.delivery_time ? ` · ${escapeHtml(product.delivery_time)}` : ''}
                             </div>
                         </div>
@@ -661,15 +674,25 @@
                                 <div class="stats-row">
                                     <div class="stat-item">
                                         <div class="stat-value">${views}</div>
-                                        <div class="stat-label">whatsapp</div>
+                                        <div class="stat-label">Vues</div>
                                     </div>
                                     <div class="stat-item">
-                                        <div class="stat-value">${clicks}</div>
-                                        <div class="stat-label">toucher</div>
+                                        <div class="stat-value">${touches}</div>
+                                        <div class="stat-label">Touchers</div>
                                     </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">${cardClicks}</div>
+                                        <div class="stat-label">Clics carte</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">${whatsappClicks}</div>
+                                        <div class="stat-label">WhatsApp</div>
+                                    </div>
+                                </div>
+                                <div class="stats-row" style="margin-top: 16px;">
                                     <div class="stat-item">
                                         <div class="stat-value">${conversion}%</div>
-                                        <div class="stat-label">Conversion</div>
+                                        <div class="stat-label">Conversion (WhatsApp/Vues)</div>
                                     </div>
                                 </div>
                             </div>
