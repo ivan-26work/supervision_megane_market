@@ -3,130 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Détail vendeur - Supervision</title>
+    <title>Vendeur - Megane Market</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="supervision.css">
     <style>
-        /* Styles spécifiques pour la page détail */
-        .detail-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .detail-header-bar {
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #ffffff;
+            color: #1a2a3a;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        .main-header {
             position: sticky;
             top: 16px;
-            z-index: 200;
+            z-index: 100;
             background: #ffffff;
             border-radius: 60px;
-            border: 1px solid #5a9eff;
             height: 60px;
-            margin: 0 0 20px 0;
+            border: 1px solid #4ade80;
+            margin: 16px 16px 0 16px;
             padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 14px;
+            gap: 12px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .back-btn {
-            background: rgba(90, 158, 255, 0.1);
-            border: 1px solid #5a9eff;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid #4ade80;
             border-radius: 40px;
-            padding: 8px 16px;
-            cursor: pointer;
-            color: #5a9eff;
-            font-weight: 500;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            cursor: pointer;
+            color: #4ade80;
             text-decoration: none;
-            font-size: 0.85rem;
             transition: all 0.2s;
-            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .back-btn:hover {
-            background: #5a9eff;
+            background: #4ade80;
             color: white;
-            transform: translateX(-4px);
+            transform: scale(1.05);
         }
 
-        .detail-header-bar h3 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-align: center;
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #5a9eff;
-        }
-
-        .disable-btn {
-            background: rgba(255, 77, 77, 0.1);
-            border: 1px solid #ff4d4d;
-            border-radius: 40px;
-            padding: 8px 16px;
-            cursor: pointer;
-            color: #ff4d4d;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-
-        .disable-btn:hover {
-            background: #ff4d4d;
-            color: white;
-        }
-
-        /* Cartes */
-        .info-card-detailed {
-            background: #ffffff;
-            border: 1px solid #e8ecf0;
-            border-radius: 24px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .info-card-detailed:hover {
-            border-color: #5a9eff;
-            box-shadow: 0 4px 12px rgba(90, 158, 255, 0.1);
-        }
-
-        .card-header {
-            padding: 16px 20px;
-            background: #fafbfc;
-            border-bottom: 1px solid #e8ecf0;
-        }
-
-        .card-header h3 {
-            font-size: 0.9rem;
+        .header-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             font-weight: 700;
-            color: #5a9eff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.9rem;
+            color: #4ade80;
+            white-space: nowrap;
         }
 
-        .card-body {
+        .placeholder {
+            width: 40px;
+            opacity: 0;
+        }
+
+        .main-content {
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
         }
 
-        /* Profil */
-        .profile-row {
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes clickPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+
+        .profile-card {
+            background: #fafbfc;
+            border: 1px solid #e8ecf0;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 20px;
             flex-wrap: wrap;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .profile-card:hover {
+            border-color: #4ade80;
         }
 
         .profile-avatar {
@@ -134,20 +119,20 @@
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #5a9eff;
+            border: 3px solid #4ade80;
         }
 
         .profile-avatar-placeholder {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: #fafbfc;
-            border: 3px solid #5a9eff;
+            background: #e8ecf0;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: #5a9eff;
+            color: #4ade80;
+            border: 3px solid #4ade80;
         }
 
         .profile-info h2 {
@@ -157,147 +142,154 @@
         }
 
         .profile-info p {
-            color: #8a9aaa;
             font-size: 0.85rem;
+            color: #8a9aaa;
         }
 
-        .profile-status {
-            margin-left: auto;
-        }
-
-        /* Grille stats */
-        .stats-grid-detailed {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-
-        .stat-card-detailed {
-            background: #fafbfc;
+        .info-card {
+            background: #ffffff;
             border: 1px solid #e8ecf0;
-            border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-            transition: all 0.2s;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.4s ease;
         }
 
-        .stat-card-detailed:hover {
-            border-color: #5a9eff;
-            transform: translateY(-2px);
+        .info-card:hover {
+            border-color: #4ade80;
         }
 
-        .stat-card-detailed .stat-value {
-            font-size: 1.5rem;
+        .info-card h3 {
+            font-size: 0.9rem;
             font-weight: 700;
-            color: #5a9eff;
-        }
-
-        .stat-card-detailed .stat-label {
-            font-size: 0.7rem;
-            color: #8a9aaa;
-            margin-top: 4px;
-        }
-
-        /* Grille infos */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        .info-item {
+            color: #4ade80;
+            margin-bottom: 16px;
             display: flex;
-            flex-direction: column;
-            gap: 4px;
+            align-items: center;
+            gap: 8px;
         }
 
-        .info-item label {
-            font-size: 0.7rem;
-            color: #8a9aaa;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .info-item .value {
-            font-size: 0.9rem;
-            font-weight: 500;
-            word-break: break-word;
-            color: #1a2a3a;
-        }
-
-        /* Description */
-        .description-text {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #1a2a3a;
-        }
-
-        /* Liste produits */
-        .products-list-detailed {
+        .info-row {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f2f5;
             gap: 12px;
         }
 
-        .product-item-detailed {
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 36px;
+            color: #4ade80;
+            font-size: 1rem;
+        }
+
+        .info-label {
+            width: 100px;
+            font-size: 0.75rem;
+            color: #8a9aaa;
+            font-weight: 600;
+        }
+
+        .info-value {
+            flex: 1;
+            font-size: 0.85rem;
+            color: #1a2a3a;
+            word-break: break-word;
+        }
+
+        .info-value a {
+            color: #4ade80;
+            text-decoration: none;
+        }
+
+        .products-section {
+            margin-top: 20px;
+        }
+
+        .section-header {
+            margin-bottom: 16px;
+        }
+
+        .section-header h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a2a3a;
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 12px 16px;
-            background: #fafbfc;
+            gap: 8px;
+        }
+
+        .section-header h3 i {
+            color: #4ade80;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .product-card {
+            background: #ffffff;
             border: 1px solid #e8ecf0;
             border-radius: 16px;
+            overflow: hidden;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            animation: fadeInScale 0.4s ease forwards;
+            opacity: 0;
         }
 
-        .product-item-detailed:hover {
-            border-color: #5a9eff;
-            transform: translateX(6px);
-            background: #ffffff;
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: #4ade80;
+            box-shadow: 0 8px 20px rgba(74, 222, 128, 0.15);
         }
 
-        .product-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+        .product-card.click-animation {
+            animation: clickPulse 0.3s ease;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 140px;
             object-fit: cover;
         }
 
-        .product-img-placeholder {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background: #e8ecf0;
+        .product-card .image-placeholder {
+            width: 100%;
+            height: 140px;
+            background: #fafbfc;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #8a9aaa;
-            font-size: 1.2rem;
+            font-size: 2rem;
         }
 
-        .product-info-detailed {
-            flex: 1;
-        }
-
-        .product-name-detailed {
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin-bottom: 4px;
+        .product-card .product-name {
+            padding: 10px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             color: #1a2a3a;
         }
 
-        .product-price-detailed {
-            font-size: 0.75rem;
-            color: #5a9eff;
-        }
-
-        .product-arrow {
+        .empty-state {
+            text-align: center;
+            padding: 40px;
             color: #8a9aaa;
+            background: #fafbfc;
+            border-radius: 16px;
         }
 
-        /* Loader */
         .loader {
             text-align: center;
             padding: 60px;
@@ -307,7 +299,7 @@
             width: 40px;
             height: 40px;
             border: 3px solid #e8ecf0;
-            border-top-color: #5a9eff;
+            border-top-color: #4ade80;
             border-radius: 50%;
             margin: 0 auto 16px;
             animation: spin 0.8s linear infinite;
@@ -317,81 +309,60 @@
             to { transform: rotate(360deg); }
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #8a9aaa;
-        }
-
-        /* Badge statut */
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-
-        .status-active {
-            background: rgba(74, 222, 128, 0.12);
-            color: #4ade80;
-            border: 1px solid rgba(74, 222, 128, 0.3);
-        }
-
-        .status-inactive {
-            background: rgba(255, 77, 77, 0.12);
-            color: #ff4d4d;
-            border: 1px solid rgba(255, 77, 77, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .stats-grid-detailed {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-            .profile-row {
-                flex-direction: column;
-                text-align: center;
-            }
-            .profile-status {
-                margin-left: 0;
-            }
-            .detail-header-bar {
+        @media (max-width: 600px) {
+            .main-header {
                 margin: 12px 12px 0 12px;
                 padding: 0 15px;
             }
-            .back-btn span {
-                display: none;
+            .back-btn {
+                width: 36px;
+                height: 36px;
+            }
+            .header-center {
+                font-size: 0.8rem;
+            }
+            .placeholder {
+                width: 36px;
+            }
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            .info-label {
+                width: auto;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .product-card img,
+            .product-card .image-placeholder {
+                height: 180px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="detail-container">
-        <div class="detail-header-bar">
-            <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> <span>Retour</span>
-            </a>
-            <h3 id="pageTitle">Chargement...</h3>
-            <button id="disableMarketBtn" class="disable-btn" style="display: none;">
-                <i class="fas fa-power-off"></i> Désactiver
-            </button>
-        </div>
+    <header class="main-header">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="header-center">Info vendeur</div>
+        <div class="placeholder"></div>
+    </header>
 
-        <div id="detailContent">
-            <div class="loader">
-                <div class="spinner"></div>
-                <p>Chargement...</p>
-            </div>
+    <main class="main-content" id="mainContent">
+        <div class="loader">
+            <div class="spinner"></div>
+            <p>Chargement...</p>
         </div>
-    </div>
-
-    <div id="toast" class="toast"></div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -400,17 +371,22 @@
             const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtY3NpZ3Zsb3BudHdiZmtramtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4ODE5MTgsImV4cCI6MjA5NDQ1NzkxOH0.YwYoV-azL3WEFtHoh4yoF7xTLrOwZILKCzJrGPsCs6I';
 
             const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            const detailContent = document.getElementById('detailContent');
-            const pageTitle = document.getElementById('pageTitle');
-            const disableBtn = document.getElementById('disableMarketBtn');
-            const toastEl = document.getElementById('toast');
+            const mainContent = document.getElementById('mainContent');
 
-            let currentVendeur = null;
-
-            function showToast(message, type = 'info') {
-                toastEl.textContent = message;
-                toastEl.className = `toast ${type} show`;
-                setTimeout(() => toastEl.classList.remove('show'), 3000);
+            async function recordCardClick(productId, type = 'card') {
+                try {
+                    await supabase
+                        .from('product_stats')
+                        .insert({
+                            product_id: productId,
+                            click_count: 1,
+                            click_type: type,
+                            clicked_at: new Date().toISOString()
+                        });
+                    console.log('Clic enregistré:', productId, '(type:', type + ')');
+                } catch (err) {
+                    console.error('Erreur enregistrement:', err);
+                }
             }
 
             function getVendeurId() {
@@ -418,30 +394,17 @@
                 return params.get('id');
             }
 
-            async function toggleMarketStatus() {
-                if (!currentVendeur) return;
-                const newStatus = !currentVendeur.market_active;
-                const action = newStatus ? 'activer' : 'désactiver';
-                
-                if (confirm(`Êtes-vous sûr de vouloir ${action} ce marché ?`)) {
-                    const { error } = await supabase
-                        .from('markets')
-                        .update({ market_active: newStatus })
-                        .eq('id', currentVendeur.id);
-                    
-                    if (error) {
-                        showToast('Erreur lors de la modification', 'error');
-                    } else {
-                        showToast(`Marché ${action} avec succès`, 'success');
-                        loadVendeur();
-                    }
-                }
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
             }
 
             async function loadVendeur() {
                 const id = getVendeurId();
                 if (!id) {
-                    detailContent.innerHTML = `<div class="empty-state">Vendeur non trouvé</div>`;
+                    mainContent.innerHTML = '<div class="empty-state">Vendeur non trouvé</div>';
                     return;
                 }
 
@@ -453,193 +416,127 @@
                         .single();
 
                     if (error || !vendeur) throw new Error('Vendeur non trouvé');
-                    currentVendeur = vendeur;
 
-                    const shortName = vendeur.market_name ? vendeur.market_name.substring(0, 25) : 'Vendeur';
-                    pageTitle.textContent = shortName;
-                    
-                    disableBtn.style.display = 'flex';
-                    disableBtn.onclick = toggleMarketStatus;
-                    const isActive = vendeur.market_active !== false;
-                    disableBtn.innerHTML = isActive ? 
-                        '<i class="fas fa-power-off"></i> Désactiver' : 
-                        '<i class="fas fa-play"></i> Activer';
-                    disableBtn.style.borderColor = isActive ? '#ff4d4d' : '#4ade80';
-                    disableBtn.style.color = isActive ? '#ff4d4d' : '#4ade80';
-
-                    const { data: produits } = await supabase
+                    const { data: produits, error: produitsError } = await supabase
                         .from('products')
-                        .select('*')
+                        .select('id, name, images')
                         .eq('user_id', id)
+                        .eq('active', true)
                         .order('created_at', { ascending: false });
 
-                    const productIds = produits?.map(p => p.id) || [];
-                    let productStats = {};
-                    if (productIds.length > 0) {
-                        const { data: stats } = await supabase
-                            .from('product_stats')
-                            .select('*')
-                            .in('product_id', productIds);
-                        for (const s of stats || []) {
-                            if (!productStats[s.product_id]) productStats[s.product_id] = { views: 0, clicks: 0 };
-                            productStats[s.product_id].views += s.view_count || 0;
-                            productStats[s.product_id].clicks += s.click_count || 0;
-                        }
-                    }
+                    if (produitsError) throw produitsError;
 
-                    const totalViews = produits?.reduce((sum, p) => sum + (productStats[p.id]?.views || 0), 0) || 0;
-                    const totalClicks = produits?.reduce((sum, p) => sum + (productStats[p.id]?.clicks || 0), 0) || 0;
-                    const conversion = totalViews ? ((totalClicks / totalViews) * 100).toFixed(1) : 0;
-                    
                     const avatarUrl = vendeur.avatar_url;
+                    const marketName = vendeur.market_name || 'Nom non renseigné';
+                    const ownerName = vendeur.owner_name || 'Propriétaire';
+                    const phone = vendeur.phone || 'Non renseigné';
+                    const city = vendeur.city || 'Non renseigné';
+                    const whatsapp = vendeur.whatsapp || null;
+                    const email = vendeur.public_email || vendeur.email || null;
+
+                    let whatsappLink = '#';
+                    if (whatsapp) {
+                        let clean = whatsapp.replace(/\D/g, '');
+                        if (clean.startsWith('0')) clean = clean.substring(1);
+                        if (!clean.startsWith('225')) clean = '225' + clean;
+                        whatsappLink = `https://wa.me/${clean}`;
+                    }
 
                     let produitsHtml = '';
                     if (produits && produits.length > 0) {
-                        produitsHtml = produits.map(p => {
-                            const imageUrl = (p.images && p.images[0]) ? p.images[0] : null;
-                            return `
-                                <div class="product-item-detailed" data-id="${p.id}">
-                                    ${imageUrl 
-                                        ? `<img src="${escapeHtml(imageUrl)}" class="product-img" onerror="this.src=''">`
-                                        : `<div class="product-img-placeholder"><i class="fas fa-image"></i></div>`
-                                    }
-                                    <div class="product-info-detailed">
-                                        <div class="product-name-detailed">${escapeHtml(p.name)}</div>
-                                        <div class="product-price-detailed">${formatPrice(p.price)} FCFA</div>
-                                    </div>
-                                    <div class="product-arrow"><i class="fas fa-chevron-right"></i></div>
-                                </div>
-                            `;
-                        }).join('');
+                        produitsHtml = `
+                            <div class="products-grid">
+                                ${produits.map(product => {
+                                    const imageUrl = (product.images && product.images[0]) ? product.images[0] : null;
+                                    return `
+                                        <div class="product-card" data-id="${product.id}">
+                                            ${imageUrl 
+                                                ? `<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(product.name)}" onerror="this.src=''">`
+                                                : `<div class="image-placeholder"><i class="fas fa-image"></i></div>`
+                                            }
+                                            <div class="product-name">${escapeHtml(product.name)}</div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        `;
                     } else {
-                        produitsHtml = '<div class="empty-state">Aucun produit</div>';
+                        produitsHtml = '<div class="empty-state">Aucun produit disponible</div>';
                     }
 
-                    detailContent.innerHTML = `
-                        <div class="info-card-detailed">
-                            <div class="card-header">
-                                <h3><i class="fas fa-user-circle"></i> Profil</h3>
+                    mainContent.innerHTML = `
+                        <div class="profile-card">
+                            ${avatarUrl 
+                                ? `<img src="${escapeHtml(avatarUrl)}" class="profile-avatar" onerror="this.src=''">`
+                                : `<div class="profile-avatar-placeholder"><i class="fas fa-store"></i></div>`
+                            }
+                            <div class="profile-info">
+                                <h2>${escapeHtml(marketName)}</h2>
+                                <p><i class="fas fa-user"></i> ${escapeHtml(ownerName)}</p>
                             </div>
-                            <div class="card-body">
-                                <div class="profile-row">
-                                    ${avatarUrl 
-                                        ? `<img src="${escapeHtml(avatarUrl)}" class="profile-avatar" onerror="this.src=''">`
-                                        : `<div class="profile-avatar-placeholder"><i class="fas fa-store"></i></div>`
-                                    }
-                                    <div class="profile-info">
-                                        <h2>${escapeHtml(vendeur.market_name || 'Sans nom')}</h2>
-                                        <p>${escapeHtml(vendeur.owner_name || 'Propriétaire')}</p>
-                                    </div>
-                                    <div class="profile-status">
-                                        <span class="status-badge ${isActive ? 'status-active' : 'status-inactive'}">${isActive ? 'Actif' : 'Inactif'}</span>
-                                    </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h3><i class="fas fa-info-circle"></i> Coordonnées</h3>
+                            <div class="info-row">
+                                <div class="info-icon"><i class="fas fa-phone"></i></div>
+                                <div class="info-label">Téléphone</div>
+                                <div class="info-value">${escapeHtml(phone)}</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <div class="info-label">Localisation</div>
+                                <div class="info-value">${escapeHtml(city)}</div>
+                            </div>
+                            ${whatsapp ? `
+                            <div class="info-row">
+                                <div class="info-icon"><i class="fab fa-whatsapp"></i></div>
+                                <div class="info-label">WhatsApp</div>
+                                <div class="info-value">
+                                    <a href="${whatsappLink}" target="_blank">${escapeHtml(whatsapp)}</a>
                                 </div>
                             </div>
+                            ` : ''}
+                            ${email ? `
+                            <div class="info-row">
+                                <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="info-label">Email</div>
+                                <div class="info-value">${escapeHtml(email)}</div>
+                            </div>
+                            ` : ''}
                         </div>
 
-                        <div class="info-card-detailed">
-                            <div class="card-header">
-                                <h3><i class="fas fa-chart-line"></i> Statistiques</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="stats-grid-detailed">
-                                    <div class="stat-card-detailed">
-                                        <div class="stat-value">${produits?.length || 0}</div>
-                                        <div class="stat-label">Produits</div>
-                                    </div>
-                                    <div class="stat-card-detailed">
-                                        <div class="stat-value">${totalViews}</div>
-                                        <div class="stat-label">Vues</div>
-                                    </div>
-                                    <div class="stat-card-detailed">
-                                        <div class="stat-value">${totalClicks}</div>
-                                        <div class="stat-label">toucher</div>
-                                    </div>
-                                    <div class="stat-card-detailed">
-                                        <div class="stat-value">${conversion}%</div>
-                                        <div class="stat-label">Conversion</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="info-card-detailed">
-                            <div class="card-header">
-                                <h3><i class="fas fa-info-circle"></i> Informations</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="info-grid">
-                                    <div class="info-item">
-                                        <label>Email</label>
-                                        <div class="value">${escapeHtml(vendeur.email || '-')}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <label>Téléphone</label>
-                                        <div class="value">${escapeHtml(vendeur.phone || '-')}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <label>Email public</label>
-                                        <div class="value">${escapeHtml(vendeur.public_email || '-')}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <label>Ville</label>
-                                        <div class="value">${escapeHtml(vendeur.city || '-')}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <label>WhatsApp</label>
-                                        <div class="value">${escapeHtml(vendeur.whatsapp || '-')}</div>
-                                    </div>
-                                    <div class="info-item">
-                                        <label>Inscrit le</label>
-                                        <div class="value">${vendeur.created_at ? new Date(vendeur.created_at).toLocaleDateString() : '-'}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="info-card-detailed">
-                            <div class="card-header">
-                                <h3><i class="fas fa-align-left"></i> Description</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="description-text">${escapeHtml(vendeur.description || 'Aucune description')}</div>
-                            </div>
-                        </div>
-
-                        <div class="info-card-detailed">
-                            <div class="card-header">
+                        <div class="products-section">
+                            <div class="section-header">
                                 <h3><i class="fas fa-boxes"></i> Produits (${produits?.length || 0})</h3>
                             </div>
-                            <div class="card-body">
-                                <div class="products-list-detailed">
-                                    ${produitsHtml}
-                                </div>
-                            </div>
+                            ${produitsHtml}
                         </div>
                     `;
 
-                    document.querySelectorAll('.product-item-detailed').forEach(item => {
-                        item.addEventListener('click', () => {
-                            const pid = item.getAttribute('data-id');
-                            window.location.href = `produit.html?id=${pid}`;
+                    document.querySelectorAll('.product-card').forEach(card => {
+                        const productId = card.getAttribute('data-id');
+                        
+                        // TOUCHER MOBILE INSTANTANÉ (sans e.preventDefault())
+                        card.addEventListener('touchstart', () => {
+                            recordCardClick(productId, 'touch');
+                        });
+                        
+                        // CLIC RÉEL
+                        card.addEventListener('click', async (e) => {
+                            card.classList.add('click-animation');
+                            setTimeout(() => card.classList.remove('click-animation'), 300);
+                            if (productId) {
+                                await recordCardClick(productId, 'card');
+                                window.location.href = `viewproduct.html?id=${productId}`;
+                            }
                         });
                     });
 
                 } catch (err) {
                     console.error(err);
-                    detailContent.innerHTML = `<div class="empty-state">Erreur: ${err.message}</div>`;
+                    mainContent.innerHTML = `<div class="empty-state">Erreur: ${err.message}</div>`;
                 }
-            }
-
-            function formatPrice(price) {
-                return new Intl.NumberFormat('fr-FR').format(price);
-            }
-
-            function escapeHtml(text) {
-                if (!text) return '';
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
             }
 
             loadVendeur();

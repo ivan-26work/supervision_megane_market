@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Megane Market - Détail produit</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+    // Vérification de session - Redirection si non connecté
+    (async function checkSessionAndRedirect() {
+        // Attendre que Supabase soit chargé
+        const waitForSupabase = setInterval(() => {
+            if (typeof window.supabase !== 'undefined') {
+                clearInterval(waitForSupabase);
+                init();
+            }
+        }, 100);
+        
+        async function init() {
+            const SUPABASE_URL = 'https://emcsigvlopntwbfkkjkh.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtY3NpZ3Zsb3BudHdiZmtramtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4ODE5MTgsImV4cCI6MjA5NDQ1NzkxOH0.YwYoV-azL3WEFtHoh4yoF7xTLrOwZILKCzJrGPsCs6I';
+            const authClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            
+            const { data: { session } } = await authClient.auth.getSession();
+            
+            if (!session) {
+                window.location.href = 'login.html';
+            }
+        }
+    })();
+</script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #ffffff;
+            color: #1a2a3a;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        .main-header {
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            background: #ffffff;
+            border-radius: 60px;
+            height: 60px;
+            border: 1px solid #4ade80;
+            margin: 16px 16px 0 16px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .back-btn {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid #4ade80;
+            border-radius: 40px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #4ade80;
+            text-decoration: none;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .back-btn:hover {
+            background: #4ade80;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .product-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-align: center;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #4ade80;
+        }
+
+        .placeholder {
+            width: 40px;
+            opacity: 0;
+        }
+
+        .main-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .carousel-container {
+            background: #fafbfc;
+            border: 1px solid #e8ecf0;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            animation: fadeInScale 0.4s ease;
+        }
+
+        .carousel-main {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            background: #fafbfc;
+        }
+
+        .carousel-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: #4ade80;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .carousel-nav.prev { left: 16px; }
+        .carousel-nav.next { right: 16px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: #fafbfc;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d0d5dd;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active {
+            background: #4ade80;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a9aaa;
+            font-size: 4rem;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-card {
+            background: #ffffff;
+            border: 1px solid #e8ecf0;
+            border-radius: 24px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            animation: slideUp 0.4s ease;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-color: #4ade80;
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.1);
+        }
+
+        .card-header {
+            padding: 16px 20px;
+            background: #fafbfc;
+            border-bottom: 1px solid #e8ecf0;
+        }
+
+        .card-header h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #4ade80;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-body {
+            padding: 8px 0;
+        }
+
+        .info-row {
+            display: flex;
+            padding: 14px 20px;
+            border-bottom: 1px solid #f0f2f5;
+            transition: background 0.2s ease;
+            flex-wrap: wrap;
+        }
+
+        .info-row:hover {
+            background: #fafbfc;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            width: 130px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #8a9aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-label i {
+            width: 18px;
+            color: #4ade80;
+            font-size: 0.7rem;
+        }
+
+        .info-value {
+            flex: 1;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1a2a3a;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .description-text {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #4a5a6a;
+        }
+
+        .price-badge {
+            display: inline-block;
+            background: #4ade80;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .price-value {
+            color: #4ade80;
+            font-weight: 700;
+            font-size: 1rem;
+            background: rgba(74, 222, 128, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge-stock {
+            background: rgba(74, 222, 128, 0.15);
+            color: #2e7d32;
+        }
+
+        .badge-outofstock {
+            background: rgba(255, 77, 77, 0.15);
+            color: #d63030;
+        }
+
+        .badge-condition {
+            background: rgba(90, 158, 255, 0.15);
+            color: #5a9eff;
+        }
+
+        .seller-card {
+            background: linear-gradient(135deg, #fafbfc, #ffffff);
+            border: 1px solid #e8ecf0;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 16px;
+            animation: slideUp 0.5s ease;
+            transition: all 0.3s ease;
+        }
+
+        .seller-card:hover {
+            border-color: #4ade80;
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.1);
+        }
+
+        .seller-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .seller-icon {
+            width: 50px;
+            height: 50px;
+            background: #4ade80;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .seller-info h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: #1a2a3a;
+        }
+
+        .seller-info p {
+            font-size: 0.75rem;
+            color: #8a9aaa;
+        }
+
+        .whatsapp-btn {
+            width: 100%;
+            background: #25D366;
+            border: none;
+            border-radius: 40px;
+            padding: 14px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .loader {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #e8ecf0;
+            border-top-color: #4ade80;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8a9aaa;
+        }
+
+        .error-state i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            color: #e8ecf0;
+        }
+
+        @media (max-width: 600px) {
+            .main-header {
+                margin: 12px 12px 0 12px;
+                padding: 0 15px;
+            }
+            .back-btn {
+                width: 36px;
+                height: 36px;
+            }
+            .product-title {
+                font-size: 0.8rem;
+            }
+            .info-label {
+                width: 100%;
+                margin-bottom: 6px;
+            }
+            .info-row {
+                flex-direction: column;
+            }
+            .carousel-nav {
+                width: 32px;
+                height: 32px;
+            }
+            .seller-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <a href="market.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="product-title" id="pageTitle">Chargement...</div>
+        <div class="placeholder"></div>
+    </header>
+
+    <main class="main-content" id="mainContent">
+        <div class="loader">
+            <div class="spinner"></div>
+            <p>Chargement du produit...</p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (function() {
+            const SUPABASE_URL = 'https://emcsigvlopntwbfkkjkh.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtY3NpZ3Zsb3BudHdiZmtramtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4ODE5MTgsImV4cCI6MjA5NDQ1NzkxOH0.YwYoV-azL3WEFtHoh4yoF7xTLrOwZILKCzJrGPsCs6I';
+
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const mainContent = document.getElementById('mainContent');
+            const pageTitle = document.getElementById('pageTitle');
+
+            let currentProduct = null;
+            let currentMarket = null;
+            let currentUserId = null;
+            let currentImages = [];
+            let carouselInterval = null;
+            let currentBuyer = null;
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function formatPrice(price) {
+                return new Intl.NumberFormat('fr-FR').format(price);
+            }
+
+            // ============ ENREGISTREMENT DE LA VUE ============
+            async function recordProductView(productId) {
+                try {
+                    await supabase
+                        .from('product_stats')
+                        .insert({
+                            product_id: productId,
+                            view_count: 1,
+                            viewed_at: new Date().toISOString()
+                        });
+                    console.log('Vue enregistrée pour le produit:', productId);
+                } catch (err) {
+                    console.error('Erreur enregistrement vue:', err);
+                }
+            }
+
+            // ============ ENREGISTREMENT DU CLIC WHATSAPP ============
+            async function recordWhatsAppClick(productId) {
+                try {
+                    await supabase
+                        .from('product_stats')
+                        .insert({
+                            product_id: productId,
+                            click_count: 1,
+                            click_type: 'whatsapp',
+                            clicked_at: new Date().toISOString()
+                        });
+                    console.log('Clic WhatsApp enregistré pour le produit:', productId);
+                } catch (err) {
+                    console.error('Erreur enregistrement clic WhatsApp:', err);
+                }
+            }
+
+            function getProductId() {
+                const params = new URLSearchParams(window.location.search);
+                return params.get('id');
+            }
+
+            async function loadProduct() {
+                const id = getProductId();
+                if (!id) {
+                    mainContent.innerHTML = '<div class="error-state"><i class="fas fa-exclamation-triangle"></i><p>Produit non trouvé</p></div>';
+                    return;
+                }
+
+                try {
+                    const { data: product, error } = await supabase
+                        .from('products')
+                        .select('*')
+                        .eq('id', id)
+                        .single();
+
+                    if (error || !product) throw new Error('Produit non trouvé');
+                    if (product.active === false) {
+                        mainContent.innerHTML = '<div class="error-state"><i class="fas fa-eye-slash"></i><p>Ce produit n\'est plus disponible</p></div>';
+                        return;
+                    }
+
+                    currentProduct = product;
+                    currentImages = (product.images || []).filter(Boolean);
+                    pageTitle.textContent = product.name.length > 30 ? product.name.substring(0, 27) + '...' : product.name;
+
+                    const { data: market, error: mError } = await supabase
+                        .from('markets')
+                        .select('*')
+                        .eq('id', product.user_id)
+                        .single();
+
+                    if (mError) throw mError;
+                    if (market.market_active === false) {
+                        mainContent.innerHTML = '<div class="error-state"><i class="fas fa-store-slash"></i><p>Ce vendeur n\'est plus actif</p></div>';
+                        return;
+                    }
+
+                    currentMarket = market;
+
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (session) {
+                        currentUserId = session.user.id;
+                        const { data: buyer } = await supabase
+                            .from('buyers')
+                            .select('full_name, phone, city')
+                            .eq('id', currentUserId)
+                            .single();
+                        if (buyer) {
+                            currentBuyer = buyer;
+                        }
+                    }
+
+                    // ENREGISTREMENT DE LA VUE
+                    await recordProductView(product.id);
+
+                    renderProduct();
+
+                } catch (err) {
+                    console.error(err);
+                    mainContent.innerHTML = `<div class="error-state"><i class="fas fa-exclamation-triangle"></i><p>Erreur: ${err.message}</p></div>`;
+                }
+            }
+
+            let currentImageIndex = 0;
+
+            function initCarousel() {
+                if (currentImages.length <= 1) return;
+
+                const mainImg = document.getElementById('mainImage');
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const dots = document.querySelectorAll('.dot');
+
+                if (!mainImg) return;
+
+                function goToSlide(index) {
+                    currentImageIndex = (index + currentImages.length) % currentImages.length;
+                    mainImg.src = currentImages[currentImageIndex];
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentImageIndex);
+                    });
+                }
+
+                function nextSlide() {
+                    goToSlide(currentImageIndex + 1);
+                    resetCarouselTimer();
+                }
+
+                function prevSlide() {
+                    goToSlide(currentImageIndex - 1);
+                    resetCarouselTimer();
+                }
+
+                function resetCarouselTimer() {
+                    if (carouselInterval) {
+                        clearInterval(carouselInterval);
+                        carouselInterval = setInterval(nextSlide, 3500);
+                    }
+                }
+
+                prevBtn.addEventListener('click', prevSlide);
+                nextBtn.addEventListener('click', nextSlide);
+                dots.forEach((dot, i) => {
+                    dot.addEventListener('click', () => {
+                        goToSlide(i);
+                        resetCarouselTimer();
+                    });
+                });
+
+                carouselInterval = setInterval(nextSlide, 3500);
+            }
+
+            function getWhatsAppLink() {
+                if (!currentMarket.whatsapp) return null;
+                let clean = currentMarket.whatsapp.replace(/\D/g, '');
+                if (clean.startsWith('0')) clean = clean.substring(1);
+                if (!clean.startsWith('225')) clean = '225' + clean;
+                return `https://wa.me/${clean}`;
+            }
+
+            function buildWhatsAppMessage() {
+                const buyerName = currentBuyer?.full_name || 'Client';
+                const buyerPhone = currentBuyer?.phone || 'Non renseigné';
+                const buyerCity = currentBuyer?.city || 'Non renseignée';
+                
+                const productName = currentProduct.name;
+                const productPrice = formatPrice(currentProduct.price) + ' FCFA';
+                const priceOption = currentProduct.price_option ? ` (${currentProduct.price_option})` : '';
+                const stock = currentProduct.stock ? `Stock: ${currentProduct.stock} unités` : '';
+                
+                const firstImage = currentImages[0] ? currentImages[0] : 'Aucune image';
+                
+                let message = `🛍️ *NOUVELLE COMMANDE* 🛍️\n\n`;
+                message += `👤 *Client :* ${buyerName}\n`;
+                message += `📞 *Téléphone :* ${buyerPhone}\n`;
+                message += `📍 *Localisation :* ${buyerCity}\n\n`;
+                message += `━━━━━━━━━━━━━━━━━━━━\n`;
+                message += `📦 *Produit :* ${productName}\n`;
+                message += `💰 *Prix :* ${productPrice}${priceOption}\n`;
+                if (stock) message += `📊 *Stock :* ${stock}\n`;
+                message += `🖼️ *Image :* ${firstImage}\n`;
+                message += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+                message += `💬 *Message du client :* \n`;
+                message += `Bonjour, je suis intéressé par ce produit. Est-il toujours disponible ?`;
+                
+                return encodeURIComponent(message);
+            }
+
+            async function contactSeller() {
+                const waLink = getWhatsAppLink();
+                if (!waLink) {
+                    alert('Numéro WhatsApp non disponible');
+                    return;
+                }
+                
+                // ENREGISTREMENT DU CLIC WHATSAPP
+                await recordWhatsAppClick(currentProduct.id);
+                
+                const message = buildWhatsAppMessage();
+                window.open(`${waLink}?text=${message}`, '_blank');
+            }
+
+            function renderProduct() {
+                let carouselHtml = '';
+                if (currentImages.length > 0) {
+                    carouselHtml = `
+                        <div class="carousel-container">
+                            <div class="carousel-main">
+                                <img id="mainImage" src="${escapeHtml(currentImages[0])}" alt="${escapeHtml(currentProduct.name)}">
+                                ${currentImages.length > 1 ? `
+                                    <button class="carousel-nav prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                                    <button class="carousel-nav next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+                                ` : ''}
+                            </div>
+                            ${currentImages.length > 1 ? `
+                            <div class="carousel-dots" id="dotsContainer">
+                                ${currentImages.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}"></div>`).join('')}
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                } else {
+                    carouselHtml = `
+                        <div class="carousel-container">
+                            <div class="carousel-main">
+                                <div class="image-placeholder"><i class="fas fa-image"></i></div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const stock = currentProduct.stock;
+                let stockHtml = '';
+                if (stock !== null && stock !== undefined) {
+                    if (stock > 0) {
+                        stockHtml = `
+                            <div class="info-row">
+                                <div class="info-label"><i class="fas fa-boxes"></i> Stock</div>
+                                <div class="info-value"><span class="badge badge-stock">${stock} unité(s) disponible(s)</span></div>
+                            </div>
+                        `;
+                    } else {
+                        stockHtml = `
+                            <div class="info-row">
+                                <div class="info-label"><i class="fas fa-boxes"></i> Stock</div>
+                                <div class="info-value"><span class="badge badge-outofstock">Rupture de stock</span></div>
+                            </div>
+                        `;
+                    }
+                }
+
+                const condition = currentProduct.condition;
+                const conditionHtml = condition ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-clipboard-list"></i> État</div>
+                        <div class="info-value"><span class="badge badge-condition">${escapeHtml(condition)}</span></div>
+                    </div>
+                ` : '';
+
+                const brandHtml = currentProduct.brand ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-trademark"></i> Marque</div>
+                        <div class="info-value">${escapeHtml(currentProduct.brand)}</div>
+                    </div>
+                ` : '';
+
+                const deliveryPrice = currentProduct.delivery_price;
+                const deliveryHtml = (deliveryPrice !== null && deliveryPrice !== undefined) ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-truck"></i> Livraison</div>
+                        <div class="info-value">
+                            ${deliveryPrice === 0 ? 'Gratuite' : formatPrice(deliveryPrice) + ' FCFA'}
+                            ${currentProduct.delivery_time ? ` · ${escapeHtml(currentProduct.delivery_time)}` : ''}
+                        </div>
+                    </div>
+                ` : '';
+
+                const colorsHtml = currentProduct.colors ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-palette"></i> Couleurs</div>
+                        <div class="info-value">${escapeHtml(currentProduct.colors)}</div>
+                    </div>
+                ` : '';
+
+                const sizesHtml = currentProduct.sizes ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-ruler"></i> Tailles</div>
+                        <div class="info-value">${escapeHtml(currentProduct.sizes)}</div>
+                    </div>
+                ` : '';
+
+                const weightHtml = currentProduct.weight ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-weight-hanging"></i> Poids</div>
+                        <div class="info-value">${currentProduct.weight} kg</div>
+                    </div>
+                ` : '';
+
+                const originHtml = currentProduct.origin ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-globe"></i> Origine</div>
+                        <div class="info-value">${escapeHtml(currentProduct.origin)}</div>
+                    </div>
+                ` : '';
+
+                const warrantyHtml = currentProduct.warranty ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-shield-alt"></i> Garantie</div>
+                        <div class="info-value">${escapeHtml(currentProduct.warranty)}</div>
+                    </div>
+                ` : '';
+
+                const returnHtml = currentProduct.return_policy ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-undo-alt"></i> Retour</div>
+                        <div class="info-value">${escapeHtml(currentProduct.return_policy)}</div>
+                    </div>
+                ` : '';
+
+                const priceOptionHtml = currentProduct.price_option ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-comment-dollar"></i> Option</div>
+                        <div class="info-value"><span class="option-price">${escapeHtml(currentProduct.price_option)}</span></div>
+                    </div>
+                ` : '';
+
+                const categoryHtml = currentProduct.category ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-tag"></i> Catégorie</div>
+                        <div class="info-value">${escapeHtml(currentProduct.category)}</div>
+                    </div>
+                ` : '';
+
+                const descriptionHtml = currentProduct.description ? `
+                    <div class="info-row">
+                        <div class="info-label"><i class="fas fa-align-left"></i> Description</div>
+                        <div class="info-value description-text">${escapeHtml(currentProduct.description)}</div>
+                    </div>
+                ` : '';
+
+                const sellerName = currentMarket.market_name || currentMarket.owner_name || 'Vendeur';
+                const sellerCity = currentMarket.city || 'Localisation non précisée';
+
+                mainContent.innerHTML = `
+                    ${carouselHtml}
+
+                    <div class="info-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-info-circle"></i> Détails du produit</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-row">
+                                <div class="info-label"><i class="fas fa-tag"></i> Nom</div>
+                                <div class="info-value">${escapeHtml(currentProduct.name)}</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label"><i class="fas fa-coins"></i> Prix</div>
+                                <div class="info-value">
+                                    <span class="price-value">${formatPrice(currentProduct.price)} FCFA</span>
+                                    <span class="price-badge">TTC</span>
+                                </div>
+                            </div>
+                            ${priceOptionHtml}
+                            ${brandHtml}
+                            ${conditionHtml}
+                            ${categoryHtml}
+                            ${stockHtml}
+                            ${deliveryHtml}
+                            ${colorsHtml}
+                            ${sizesHtml}
+                            ${weightHtml}
+                            ${originHtml}
+                            ${warrantyHtml}
+                            ${returnHtml}
+                            ${descriptionHtml}
+                        </div>
+                    </div>
+
+                    <div class="seller-card">
+                        <div class="seller-header">
+                            <div class="seller-icon">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="seller-info">
+                                <h4>${escapeHtml(sellerName)}</h4>
+                                <p><i class="fas fa-map-marker-alt"></i> ${escapeHtml(sellerCity)}</p>
+                            </div>
+                        </div>
+                        <button id="whatsappBtn" class="whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i> Contacter le vendeur
+                        </button>
+                    </div>
+                `;
+
+                if (currentImages.length > 1) {
+                    initCarousel();
+                }
+
+                document.getElementById('whatsappBtn').addEventListener('click', contactSeller);
+            }
+
+            loadProduct();
+        })();
+    </script>
+</body>
+</html>

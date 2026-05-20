@@ -3,58 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Supervision - Megane Market</title>
+    <title>Megane Market - Accueil</title>
+    <meta name="description" content="Restez informé des actualités de vos commerçants préférés.">
+    <meta name="theme-color" content="#4ade80">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Megane Market">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+    
+    <meta property="og:title" content="Megane Market">
+    <meta property="og:description" content="Découvrez les actualités de vos commerçants préférés">
+    <meta property="og:image" content="https://ivan-26work.github.io/megane_market_online/assets/logo.png">
+    <meta property="og:url" content="https://ivan-26work.github.io/megane_market_online/index.html">
+    <meta property="og:type" content="website">
+    
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="supervision.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="main-header">
-        <div class="logo-area">
-            <i class="fas fa-chart-line"></i>
-            <span>Supervision Megane Market</span>
-        </div>
-        <div class="search-container">
-            <i class="fas fa-search"></i>
-            <input type="text" id="globalSearch" placeholder="Rechercher...">
-        </div>
+        <a href="index.html" class="logo">
+            <img src="assets/logo.png" alt="Megane Market" class="logo-img">
+        </a>
+        <div class="header-center">Megane Market</div>
         <div class="header-actions">
-            <a href="envoi-email.html" class="header-btn" title="Envoyer un email">
-                <i class="fas fa-envelope"></i>
-            </a>
-            <button id="refreshBtn" class="header-btn" title="Rafraîchir">
+            <button id="refreshBtn" class="refresh-btn" title="Mise à jour">
                 <i class="fas fa-sync-alt"></i>
+                <span id="refreshBadge" class="refresh-badge">0</span>
             </button>
-            <button id="logoutBtn" class="header-btn logout" title="Déconnexion">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
+            <a href="market.html" class="market-btn">
+                <i class="fas fa-store"></i> <span>Marché</span>
+            </a>
+            <a href="profil.html" class="profile-btn" title="Mon profil">
+                <i class="fas fa-user"></i>
+            </a>
         </div>
     </header>
 
-    <div class="tabs-container">
-        <button class="tab-btn active" data-tab="sellers">
-            <i class="fas fa-store"></i> Vendeurs
-            <span id="sellersBadge" class="tab-badge">0</span>
-        </button>
-        <button class="tab-btn" data-tab="clients">
-            <i class="fas fa-users"></i> Clients
-            <span id="clientsBadge" class="tab-badge">0</span>
-        </button>
-        <button class="tab-btn" data-tab="products">
-            <i class="fas fa-boxes"></i> Produits
-            <span id="productsBadge" class="tab-badge">0</span>
-        </button>
+    <div id="installBanner" class="install-banner">
+        <div class="install-text">
+            <i class="fas fa-download"></i>
+            <span>Installer l'application</span>
+        </div>
+        <button id="installBtn" class="install-btn">Installer</button>
     </div>
 
-    <main id="tabContent" class="tab-content">
-        <div class="loader">
-            <div class="spinner"></div>
-            <p>Chargement des données...</p>
+    <div class="cta-banner" id="searchBanner">
+        <div class="cta-icon" id="searchIcon">
+            <i class="fas fa-search"></i>
         </div>
-    </main>
+        <div class="cta-content">
+            <h3>Vous cherchez un produit ?</h3>
+            <p>Accédez au marché pour rechercher, filtrer par catégorie et trouver ce qu'il vous faut.</p>
+            <a href="market.html" class="cta-btn">Visiter le marché <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <section class="welcome-section">
+        <div class="welcome-card">
+            <i class="fas fa-hand-peace"></i>
+            <h2 id="welcomeTitle">Bonjour</h2>
+            <p id="welcomeText">Bienvenue sur Megane Market</p>
+        </div>
+    </section>
+
+    <section class="news-banners-section">
+        <div class="section-header">
+            <h2><i class="fas fa-bell"></i> Actualités</h2>
+        </div>
+        <div id="newsBanners" class="news-banners-list"></div>
+    </section>
+
+    <section class="trending-section">
+        <div class="section-header">
+            <h2><i class="fas fa-fire"></i> Produits tendances</h2>
+            <a href="market.html" class="section-link">Voir tout <i class="fas fa-chevron-right"></i></a>
+        </div>
+        <div class="trending-carousel">
+            <div class="carousel-track" id="trendingTrack"></div>
+            <button class="carousel-nav prev" id="trendingPrev"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-nav next" id="trendingNext"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <section class="markets-section">
+        <div class="section-header">
+            <h2><i class="fas fa-store-alt"></i> Marchés disponibles</h2>
+            <a href="market.html" class="section-link">Voir tout <i class="fas fa-chevron-right"></i></a>
+        </div>
+        <div class="markets-grid" id="marketsGrid"></div>
+    </section>
+
+    <div class="cta-banner alt">
+        <div class="cta-icon">
+            <i class="fas fa-lightbulb"></i>
+        </div>
+        <div class="cta-content">
+            <h3>Besoin d'inspiration ?</h3>
+            <p>Parcourez le marché pour découvrir des produits coup de cœur et trouver l'inspiration.</p>
+            <a href="market.html" class="cta-btn">S'inspirer <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <section class="top-products-section">
+        <div class="section-header">
+            <h2><i class="fas fa-star"></i> Produits top</h2>
+            <a href="market.html" class="section-link">Voir tout <i class="fas fa-chevron-right"></i></a>
+        </div>
+        <div class="top-products-carousel">
+            <div class="carousel-container">
+                <div class="carousel-slides" id="topProductsSlides"></div>
+                <button class="carousel-control prev" id="topProductsPrev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-control next" id="topProductsNext"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-dots" id="topProductsDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-section">
+        <div class="section-header">
+            <h2><i class="fas fa-heart"></i> Coup de cœur du moment</h2>
+        </div>
+        <div id="featuredProduct" class="featured-card">
+            <div class="skeleton-featured"></div>
+        </div>
+    </section>
+
+    <div id="encouragementBanner" class="encouragement-banner" style="display: none;">
+        <div class="encouragement-icon">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+        <div class="encouragement-content">
+            <h3>Prêt à passer commande ?</h3>
+            <p>Discutez avec vos commerçants préférés en un clic.</p>
+            <a href="market.html" class="encouragement-btn">Explorer le marché <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="info-grid-section">
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <h3>A propos de Megane Market</h3>
+            <p>Megane Market est une plateforme de mise en relation entre commerçants et acheteurs.</p>
+        </div>
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-universal-access"></i>
+            </div>
+            <h3>Comment utiliser Megane Market</h3>
+            <p>Parcourir, Rechercher, Contacter, Installer l'application</p>
+        </div>
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Confidentialité</h3>
+            <p>Données jamais partagées. Échanges via WhatsApp.</p>
+        </div>
+    </div>
+
+    <div class="cta-banner last">
+        <div class="cta-icon">
+            <i class="fas fa-cart-shopping"></i>
+        </div>
+        <div class="cta-content">
+            <h3>Prêt à faire vos achats ?</h3>
+            <p>Accédez au marché complet pour voir tous les produits, catégories et vendeurs.</p>
+            <a href="market.html" class="cta-btn primary">Accéder au marché <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- BANNIÈRES INFINIES (défilement infini) -->
+    <section class="infinite-banners-section">
+        <div class="section-header">
+            <h2><i class="fas fa-infinity"></i> Découvrez encore plus</h2>
+        </div>
+        <div id="infiniteBannersContainer" class="infinite-banners-list"></div>
+        <div id="infiniteLoadingTrigger" class="loading-trigger" style="display: none;">
+            <div class="loading-spinner-small"></div>
+            <p>Chargement de plus de produits...</p>
+        </div>
+    </section>
+
+    <div id="toast" class="toast"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supervision.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/megane_market_online/sw.js')
+                    .then(reg => console.log('SW enregistré:', reg))
+                    .catch(err => console.log('Erreur SW:', err));
+            });
+        }
+
+        (function setupPWA() {
+            let deferredPrompt;
+            const installBanner = document.getElementById('installBanner');
+            const installBtn = document.getElementById('installBtn');
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                if (installBanner) installBanner.classList.add('show');
+            });
+
+            if (installBtn) {
+                installBtn.addEventListener('click', async () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        if (outcome === 'accepted' && installBanner) {
+                            installBanner.classList.remove('show');
+                        }
+                        deferredPrompt = null;
+                    }
+                });
+            }
+        })();
+
+        const searchIcon = document.getElementById('searchIcon');
+        if (searchIcon) {
+            searchIcon.addEventListener('click', () => {
+                searchIcon.style.transition = 'transform 0.3s ease';
+                searchIcon.style.transform = 'scale(1.3)';
+                setTimeout(() => {
+                    window.location.href = 'search.html';
+                }, 200);
+            });
+        }
+    </script>
 </body>
 </html>
