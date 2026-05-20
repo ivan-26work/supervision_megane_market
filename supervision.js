@@ -15,6 +15,7 @@
     let allSellers = [];
     let allClients = [];
     let allProducts = [];
+    let productBoosts = {};
     let currentTab = 'sellers';
 
     // ============ UTILITAIRES ============
@@ -63,6 +64,25 @@
         }, 3000);
     }
 
+    // ============ CHARGEMENT DES BOOSTS ============
+    async function loadProductBoosts() {
+        try {
+            const { data } = await supabaseClient
+                .from('product_boosts')
+                .select('product_id, discount_percent')
+                .eq('is_active', true);
+            
+            productBoosts = {};
+            for (const boost of data || []) {
+                if (boost.discount_percent > 0) {
+                    productBoosts[boost.product_id] = boost.discount_percent;
+                }
+            }
+        } catch (err) {
+            console.error('Erreur chargement boosts:', err);
+        }
+    }
+
     // ============ AUTHENTIFICATION ============
     async function checkSession() {
         const { data: { session } } = await supabaseClient.auth.getSession();
@@ -91,6 +111,8 @@
             allSellers = sellersRes.data || [];
             allClients = clientsRes.data || [];
             allProducts = productsRes.data || [];
+
+            await loadProductBoosts();
 
             updateBadges();
             renderCurrentTab();
@@ -235,7 +257,7 @@
         });
     }
 
-    // ============ PRODUITS ============
+    // ============ PRODUITS STYLÉS ============
     function renderProducts() {
         const searchTerm = getSearchTerm();
         let filtered = [...allProducts];
@@ -256,14 +278,32 @@
             <div class="products-grid">
                 ${filtered.map(product => {
                     const imageUrl = (product.images && product.images[0]) ? product.images[0] : null;
+                    const isActive = product.active !== false;
+                    const discount = productBoosts[product.id] || 0;
+                    const newPrice = discount > 0 ? Math.round(product.price * (1 - discount / 100)) : product.price;
+                    
                     return `
                         <div class="product-card" data-id="${product.id}">
+                            ${discount > 0 ? `<div class="promo-badge"><i class="fas fa-tag"></i> -${discount}%</div>` : ''}
+                            ${!isActive ? `<div class="inactive-badge"><i class="fas fa-eye-slash"></i> Inactif</div>` : ''}
                             ${imageUrl 
                                 ? `<img src="${escapeHtml(imageUrl)}" class="product-image" onerror="this.src=''">`
                                 : `<div class="product-image-placeholder"><i class="fas fa-image"></i></div>`
                             }
                             <div class="product-info">
                                 <div class="product-name">${escapeHtml(product.name)}</div>
+                                <div class="product-price">
+                                    ${discount > 0 
+                                        ? `<span>${formatPrice(newPrice)} FCFA</span>
+                                           <span class="old-price">${formatPrice(product.price)} FCFA</span>`
+                                        : `<span>${formatPrice(product.price)} FCFA</span>`
+                                    }
+                                </div>
+                                ${product.category ? `
+                                    <div class="product-category">
+                                        <i class="fas fa-tag"></i> ${escapeHtml(product.category)}
+                                    </div>
+                                ` : ''}
                             </div>
                         </div>
                     `;
